@@ -1,0 +1,15 @@
+Basic Usage of Git
+1. Relations among remote, repository, index and workspace
+	remote to repository:		fetch/clone
+	repository to workspace:	checkout
+	remote to workspace:		pull
+	workspace to index:		add
+	index to repository:		commit
+	repository to remote:		push
+2. git pull
+	git pull remote_machine remote_branch:local_branch
+	e.g. git pull origin gzh:master
+3. git push
+	git push remote_machien local_branch:remote_branch
+	e.g. git push origin master:gzh
+
