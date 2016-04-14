@@ -12,4 +12,6 @@ Basic Usage of Git
 3. git push
 	git push remote_machien local_branch:remote_branch
 	e.g. git push origin master:gzh
-
+4. git reset: delete error commits remotely.
+	git reset --hard <commit_id>
+	git push origin (local_branch:remote_branch) HEAD --force
