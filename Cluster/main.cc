@@ -89,7 +89,7 @@ void Cluster::CalcClusterResult() {
 
 	for (int i = 1; i <= nelements; ++i) {
 		clusterid = (int*)calloc(nelements, sizeof(int));
-		kmedoids (i, nelements, distance, knpass, clusterid, &error, &ifound);
+		kmedoids(i, nelements, distance, knpass, clusterid, &error, &ifound);
 		cluster_result.push_back(clusterid);
 		
 		for (int j = 0; j < nschools; ++j) {
@@ -100,6 +100,10 @@ void Cluster::CalcClusterResult() {
 			}
 		}
 	}
+}
+
+void Cluster::Run() {
+
 }
 
 int main() {
