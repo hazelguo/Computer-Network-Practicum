@@ -1,0 +1,26 @@
+0 George Washington University, GWU
+1 Columbia University, Columbia
+2 Cornell University, Cornell
+3 Duke University, Duke
+4 University of California-San Diego, UCSD
+5 University of Pennsylvania, UPenn
+6 Carnegie Mellon University, CMU
+7 University of Chicago, UChicago
+8 University of Michigan-Ann Arbor, UM-Ann Arbor
+9 Johns Hopkins University, JHU
+10 University of Southern California, USC
+11 Georgia Institute of Technology, Gatech
+12 Northwestern University, NU
+13 New York University, NYU
+14 Washington University in St. Louis, WU
+15 Georgetown University, GU
+16 University of Virginia, UVa
+17 Brandeis University, Brandeis
+18 Northeastern Universit, NEU
+19 Case Western Reserve University, CWRU
+20 The Pennsylvania State University, PSU
+21 Dartmouth College, Dartmouth
+22 Boston University, BU
+23 University of Illinois at Urbana-Champaign, UIUC
+24 Syracuse University, SU
+25 Rice
