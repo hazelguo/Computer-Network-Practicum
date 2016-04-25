@@ -32,9 +32,10 @@ StudentCluster ConstructStudentClusterFromInput() {
 			students.push_back(k);
 		}
 		student_ids_accepted_by_school.push_back(students);	
-}
+	}
 
-	StudentCluster studentCluster(num_students, num_schools, distance, student_ids_accepted_by_school);
+	StudentCluster studentCluster(num_students, num_schools, distance, 
+			student_ids_accepted_by_school);
 	return studentCluster;
 }
 
@@ -43,13 +44,15 @@ void OutputSchoolsForStudents(StudentCluster studentCluster) {
 
 	int num_students = studentCluster.GetNumStudents();
 	for (int student_id = 0; student_id < num_students; ++student_id) {
-		unordered_set<int> school_ids = studentCluster.GetSchoolIdsForStudent(student_id);
+		unordered_set<int> school_ids = 
+				studentCluster.GetSchoolIdsForStudent(student_id);
 		printf("%lu ", school_ids.size());
-		for (unordered_set<int>::iterator iter = school_ids.begin(); iter != school_ids.end(); ++iter) {
+		for (unordered_set<int>::iterator iter = school_ids.begin(); 
+				iter != school_ids.end(); ++iter) {
 			printf("%d ", *iter);
-    }
-    printf("\n");
-  }
+		}
+		printf("\n");
+	}
 }
 
 int main() {
