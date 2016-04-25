@@ -19,20 +19,20 @@ StudentCluster ConstructStudentClusterFromInput() {
 		distance[i] = (double*)calloc(i, sizeof(double));
 		for (int j = 0; j < i; ++j) {
 			scanf("%lf", &distance[i][j]);
-    }
-  }
+		}
+	}
 
 	vector<vector<int> > student_ids_accepted_by_school;
 	for (int i = 0; i < num_schools; ++i) {
 		vector<int> students;
 		students.clear();
-    int j, k;
-    for (scanf("%d", &j); j ; --j) {
+		int j, k;
+		for (scanf("%d", &j); j ; --j) {
 			scanf("%d", &k);
-      students.push_back(k);
-    }
-		student_ids_accepted_by_school.push_back(students);
-  }
+			students.push_back(k);
+		}
+		student_ids_accepted_by_school.push_back(students);	
+}
 
 	StudentCluster studentCluster(num_students, num_schools, distance, student_ids_accepted_by_school);
 	return studentCluster;
