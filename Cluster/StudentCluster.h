@@ -99,7 +99,7 @@ private:
     vector<int *> _cluster_ids_for_k_value;
     // Optimal K value in K-medoids algorithm for each school.
     vector<int> _k_value_for_school;
-    // For each student, Choice stores all schools that might accpet him.
+    // For each student, Choice stores all schools that might accept him.
     vector<unordered_set<int> > _school_ids_for_student;
 };
 

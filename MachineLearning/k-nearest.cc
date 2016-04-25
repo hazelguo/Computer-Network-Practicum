@@ -1,7 +1,10 @@
 #include "StudentInfo.h"
 #include "BPNeuralNet.h"
+#include "../Cluster/k_to_schools.h"
 
 #include <queue>
+#include <vector>
+#include <unordered_set>
 
 const int k = 3;
 
@@ -26,6 +29,39 @@ double calculate_similarity(StudentInfo* a, StudentInfo* b){
 	return similarity[0];
 }
 
+void GetInputForKStudentsToSchools(const int& student_num,
+		vector<unordered_set<int> >* school_ids_for_student, 
+		vector<SchoolScore>* school_score) {
+	freopen("../Cluster/school_ids_for_student", "r", stdin);
+	unordered_set<int> school_ids;
+	for (int student = 0; student < student_num; ++student) {
+		int num_school;
+		scanf("%d", &num_school);
+		school_ids.clear();
+		for (int school = 0; school < num_school; ++school) {
+			int p;
+			scanf("%d", &p);
+			school_ids.insert(p);
+		}
+		school_ids_for_student->push_back(school_ids);
+	}
+	fclose(stdin);
+
+	freopen("../A_University", "r", stdin);
+	int num_school;
+	scanf("%d", &num_school);
+	for (int school = 0; school < num_school; ++school) {
+		int id;
+		double score;
+		char name[100];
+		scanf("%d %lf", &id, &score);
+		gets(name);
+		school_score->push_back(SchoolScore(score, name, id));
+	} 
+	fclose(stdin);
+	sort(school_score->begin(), school_score->end());
+}
+
 int main(){
 
 	StudentInfo *student_info;
@@ -48,6 +84,7 @@ int main(){
 			}
 		}
 	}
+/*
 	FILE *fp;
     fp = fopen("IOFiles/k-nearest.out", "w");
 	while (!pq.empty()) {
@@ -55,6 +92,23 @@ int main(){
 		pq.pop();	
 	}
 	fclose(fp);
+*/
+
+	vector<unordered_set<int> > school_ids_for_student;
+	vector<SchoolScore> school_score;
+	GetInputForKStudentsToSchools(student_num, &school_ids_for_student, 
+			&school_score);
+	KStudentsToSchools *k_students_to_schools = 
+			new KStudentsToSchools(school_ids_for_student, school_score);
+
+	vector<int> k_students;
+	while (!pq.empty()) {
+		k_students.push_back(pq.top().student_id);
+		pq.pop();
+	}
+	vector<string> school_recommendation;
+	k_students_to_schools->SchoolRecommendation(k_students, &school_recommendation);
+		
 	return 0;
 	
 }

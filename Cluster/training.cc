@@ -39,12 +39,14 @@ StudentCluster ConstructStudentClusterFromInput() {
 }
 
 void OutputSchoolsForStudents(StudentCluster studentCluster) {
-    int num_students = studentCluster.GetNumStudents();
+		freopen("school_ids_for_student", "w", stdou);
+
+		int num_students = studentCluster.GetNumStudents();
     for (int student_id = 0; student_id < num_students; ++student_id) {
-        unordered_set<int> school_ids = studentCluster.GetSchoolIdsForStudent(student_id);
-        printf("%lu ", school_ids.size());
+				unordered_set<int> school_ids = studentCluster.GetSchoolIdsForStudent(student_id);
+				printf("%lu ", school_ids.size());
         for (unordered_set<int>::iterator iter = school_ids.begin(); iter != school_ids.end(); ++iter) {
-            printf("%d ", *iter);
+						printf("%d ", *iter);
         }
         printf("\n");
     }
