@@ -1,23 +1,48 @@
 #include "BPNeuralNet.h"
 
+/*
 void winit(double w[],int n) //权值初始化  
 {  
   for(int i=0;i<n;i++)  
     w[i]=(2.0*(double)rand()/RAND_MAX)-1;  
 } 
+*/
 
-BPNeuralNet::BPNeuralNet()  
-{  
+void initial(vector<double> &a, int n) {
+    a.clear();
+    for (int i = 0; i < n; ++i) 
+        a.push_back((2.0*(double)rand()/RAND_MAX)-1);
+}
+
+void initial(vector<vector<double> > &a, int n, int m) {
+    a.clear();
+    vector<double> b;
+    for (int i = 0; i < n; ++i) {
+        b.clear();
+        for (int j = 0; j < m; j++)
+            b.push_back((2.0*(double)rand()/RAND_MAX)-1);
+        a.push_back(b);
+    }
+    
+}
+
+BPNeuralNet::BPNeuralNet() {  
     error=100;  
     e=0.0;
     rate_w=0.9;  //权值学习率（输入层--隐含层)  
     rate_w1=0.9; //权值学习率 (隐含层--输出层)  
     rate_b1=0.9; //隐含层阀值学习率  
-    rate_b2=0.9; //输出层阀值学习率    
+    rate_b2=0.9; //输出层阀值学习率 
+    initial(w, innode, hidenode);
+    initial(w1, hidenode, outnode);
+    initial(b1, hidenode);
+    initial(b2, outnode); 
+    /*
     winit((double*)w,innode*hidenode);  
     winit((double*)w1,hidenode*outnode);  
     winit(b1,hidenode);  
-    winit(b2,outnode);    
+    winit(b2,outnode);  
+    */  
 }  
   
 BPNeuralNet::~BPNeuralNet() {  
@@ -159,6 +184,7 @@ void BPNeuralNet::SaveWeightAndThreshold() {
         fprintf(fp, " %lf", b2[i]);
     }
     fprintf(fp, "\n");
+    
     fclose(fp);
 }
 

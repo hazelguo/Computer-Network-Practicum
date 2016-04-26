@@ -40,13 +40,14 @@ int main(){
         }
     }
     cout << X.size() << endl;
+    BP_neural_net.trainsample = X.size();
     double last_error = 0.0;
-    while(abs(last_error - BP_neural_net.error) > 0.000001)  
+    while(abs(last_error - BP_neural_net.error) > 0.001)  
     {   
         last_error = BP_neural_net.error;
         BP_neural_net.e=0.0;  
         times++;  
-        BP_neural_net.train(X,Y);
+        BP_neural_net.train(X, Y);
         cout<<"Times="<<times<<" error="<<BP_neural_net.error<<endl;
     }  
     cout<<"trainning complete..."<<endl;
