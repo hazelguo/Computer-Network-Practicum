@@ -10,12 +10,18 @@ using namespace std;
 
 class School {
 public:
-    static vector<double> china_school;
+    /*static vector<double> china_school;
     static vector<double> USA_school;
     static void ReadIn(const char *filepath_china, const char *filepath_USA);
     static double GetChinaSchoolRank(int id);
-    static double GetUSASchoolRank(int id);
-
+    static double GetUSASchoolRank(int id);*/
+    double rank;
+    string name;
+    School(double _rank, string _name);
+    static void ReadIn(vector<School*> &schools, const char *filepath);
+    static void ReadIn(const char *filepath_A, const char *filepath_C);
+    static vector<School*> A_school;
+    static vector<School*> C_school;
 };
 
 class Offer {
@@ -35,15 +41,28 @@ class StudentInfo {
         double GPA;
         double IELTS;
         int TOEFL;
-        int GRE;
+        double GRE_overall;
+        double GRE_verbal;
         double GRE_writing;
-        int summer_intern;
+        int research_intern;
+        int company_intern;
         int paper;
         int final_decision;
         vector<Offer> offers;
+        vector<double> attributes;
+        static int attributes_num;
+        static vector<double> total;
+        static vector<int> count;
+        static vector<double> average;
+        static vector<double> std;
         StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
-                    int _GRE, double _GRE_writing, int _summer_intern,
+                    double _GRE_overall, double _GRE_verbal, double _GRE_writing,
+                    int _research_intern, int _company_intern,
                     int _paper, int _final_decision);
+        //void CalculateAverage();
+        //void Normalize();
+        static void Standardize(vector<StudentInfo*> &students_info);
+        static void Standardize(StudentInfo &students_info);
         static void ReadIn(vector<StudentInfo*> &students_info, const char *filepath);
         static StudentInfo *ReadInOne(const char *filepath);
         static void GetProperties(StudentInfo *a,

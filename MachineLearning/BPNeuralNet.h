@@ -11,7 +11,7 @@ using namespace std;
 //#define innode 7  //输入结点数  
 //#define hidenode 10//隐含结点数  
 //#define outnode 1 //输出结点数  
-const int innode = 7;
+const int innode = 10;
 const int hidenode = 10;
 const int outnode = 1;
 

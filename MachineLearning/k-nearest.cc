@@ -68,10 +68,10 @@ int main(){
 	vector<StudentInfo*> students_info;
 	StudentSimilarity tmp;
 	priority_queue<StudentSimilarity> pq;
-	BP_neural_net.GetWeightAndThreshold();
-	StudentInfo::ReadIn(students_info, "IOFiles/StudentsInfo.in");
-	School::ReadIn("IOFiles/ChinaSchool.in", "IOFiles/USASchool.in");
-	student_info = StudentInfo::ReadInOne("IOFiles/StudentInfo.in");
+    BP_neural_net.GetWeightAndThreshold();
+    School::ReadIn("IOFiles/USASchool.in", "IOFiles/ChinaSchool.in");
+    StudentInfo::ReadIn(students_info, "IOFiles/StudentsInfo.in");
+    StudentInfo::Standardize(students_info);
 	int student_num = students_info.size();
 	for(int i = 0; i < student_num; ++i){
 		tmp.similarity = calculate_similarity(students_info[i], student_info);

@@ -184,7 +184,7 @@ void BPNeuralNet::SaveWeightAndThreshold() {
         fprintf(fp, " %lf", b2[i]);
     }
     fprintf(fp, "\n");
-    
+
     fclose(fp);
 }
 

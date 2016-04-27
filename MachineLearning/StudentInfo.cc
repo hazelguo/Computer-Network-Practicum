@@ -1,7 +1,16 @@
 #include "StudentInfo.h"
 
 #include <iostream>
+#include <cmath>
 
+double sqr(double a) {
+    return a * a;
+}
+
+vector<School*> School::C_school;
+vector<School*> School::A_school;
+
+/*
 vector<double> School::china_school;
 vector<double> School::USA_school;
 
@@ -17,16 +26,45 @@ void School::ReadIn(const char *filepath_china,
                     const char *filepath_USA) {
     FILE *fp_china, *fp_USA;
     double rank;
+    int id;
+    char s[100];
     fp_china = fopen(filepath_china, "r");
     fp_USA = fopen(filepath_USA, "r");
-    while(fscanf(fp_china, "%lf", &rank) > 0) {
+    while(fscanf(fp_china, "%d%lf", &id, &rank) > 0) {
         china_school.push_back(rank);
     }
-    while(fscanf(fp_USA, "%lf", &rank) > 0) {
+    while(fscanf(fp_USA, "%d%lf", &id, &rank) > 0) {
         USA_school.push_back(rank);
     }
     fclose(fp_china);
     fclose(fp_USA);
+}
+*/
+
+School::School(double _rank, string _name) {
+    rank = _rank;
+    name = _name;
+}
+
+void School::ReadIn(vector<School*> &schools,
+                    const char *filepath) {
+    FILE *fp;
+    int id;
+    double rank;
+    char name[80];
+    School* school = NULL;
+    fp = fopen(filepath, "r");
+    while (fscanf(fp, "%d%lf", &id, &rank) > 0) {
+        fgets(name, 100, fp);
+        school = new School(rank, name);
+        schools.push_back(school);
+    }
+}
+
+void School::ReadIn(const char *filepath_A,
+                    const char *filepath_C) {
+    ReadIn(A_school, filepath_A);
+    ReadIn(C_school, filepath_C);
 }
 
 Offer::Offer(int _school, int _degree) {
@@ -46,40 +84,121 @@ bool Offer::operator==(const Offer &a) const {
     else return false;
 }
 
+int StudentInfo::attributes_num = 10;
+
+vector<double> StudentInfo::total(StudentInfo::attributes_num, 0);
+vector<int> StudentInfo::count(StudentInfo::attributes_num, 0);
+vector<double> StudentInfo::average(StudentInfo::attributes_num, 0);
+vector<double> StudentInfo::std(StudentInfo::attributes_num, 0);
+
 StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
-                         int _GRE, double _GRE_writing, int _summer_intern,
+                         double _GRE_overall, double _GRE_verbal, double _GRE_writing,
+                         int _research_intern, int _company_intern,
                          int _paper, int _final_decision) {
     school = _school;
     GPA = _GPA;
     IELTS = _IELTS;
     TOEFL = _TOEFL;
-    GRE = _GRE;
+    GRE_overall = _GRE_overall;
+    GRE_verbal = _GRE_verbal;
     GRE_writing = _GRE_writing;
-    summer_intern = _summer_intern;
+    research_intern = _research_intern;
+    company_intern = _company_intern;
     paper = _paper;
     final_decision = _final_decision;
     offers.clear();
+    attributes.clear();
+    attributes.push_back(School::C_school[school]->rank);
+    attributes.push_back(GPA);
+    attributes.push_back(IELTS);
+    attributes.push_back(TOEFL);
+    attributes.push_back(GRE_overall);
+    attributes.push_back(GRE_verbal);
+    attributes.push_back(GRE_writing);
+    attributes.push_back(research_intern);
+    attributes.push_back(company_intern);
+    attributes.push_back(paper);
+}
+/*
+void StudentInfo::CalculateAverage() {
+    for (int i = 0; i < attributes_num; ++i) {
+        if (count[i] == 0) average[i] = 0;
+        else average[i] = total[i] / count[i];
+    }
+}
+
+void StudentInfo::Normalize() {
+    for (i = 0; i < attributes.size(); i++) {
+        if (attributes[i] < 0){
+            attributes[i] = average[i];
+        }
+    }
+}
+*/
+
+void StudentInfo::Standardize(vector<StudentInfo*> &students_info) {
+    //vector<double> total(attributes_num, 0);
+    //vector<double> count(attributes_num, 0);
+    //vector<double> average(attributes_num, 0);
+    //vector<double> std(attributes_num, 0);
+    for (int i = 0; i < students_info.size(); ++i) {
+        for (int j = 0; j < attributes_num; ++j) {
+            if (students_info[i]->attributes[j] >= -0.0001) {
+                total[j] += students_info[i]->attributes[j];
+                count[j]++;
+            }
+        }
+    }
+    for (int j = 0; j < attributes_num; ++j) {
+        average[j] = total[j] / count[j];
+    }
+    for (int i = 0; i < students_info.size(); ++i) {
+        for (int j = 0; j < attributes_num; ++j) {
+            if (students_info[i]->attributes[j] >= -0.0001) {
+                std[j] += sqr(students_info[i]->attributes[j] - average[j]);
+            }
+        }
+    }
+    for (int j = 0; j < attributes_num; ++j) {
+        std[j] /= (count[j] - 1);
+        std[j] = sqrt(std[j]);
+    }
+    for (int i = 0; i < students_info.size(); ++i) {
+        for (int j = 0; j < attributes_num; ++j) {
+            if (students_info[i]->attributes[j] >= -0.0001) {
+                students_info[i]->attributes[j] =
+                    (students_info[i]->attributes[j] - average[j]) / std[j];
+            }
+            else {
+                students_info[i]->attributes[j] = 0;
+            }
+        }
+    }
 }
 
 void StudentInfo::ReadIn(vector<StudentInfo*> &students_info,
-                         const char *filepath){
+                         const char *filepath) {
     FILE *fp;
     StudentInfo* student_info = NULL;
     int _school;
     double _GPA;
     double _IELTS;
     int _TOEFL;
-    int _GRE;
+    double _GRE_overall;
+    double _GRE_verbal;
     double _GRE_writing;
-    int _summer_intern;
+    int _research_intern;
+    int _company_intern;
     int _paper;
     int _final_decision;
     fp = fopen(filepath, "r");
-    while (fscanf(fp, "%d%lf%lf%d%d%lf%d%d%d", &_school,
-                  &_GPA, &_IELTS, &_TOEFL, &_GRE, &_GRE_writing,
-                  &_summer_intern, &_paper, &_final_decision) > 0) {
+    while (fscanf(fp, "%d%lf%lf%d%lf%lf%lf%d%d%d%d", &_school,
+                  &_GPA, &_IELTS, &_TOEFL, &_GRE_overall, &_GRE_verbal,
+                  &_GRE_writing, &_research_intern, &_company_intern, 
+                  &_paper, &_final_decision) > 0) {
         student_info = new StudentInfo(_school, _GPA, _IELTS, _TOEFL,
-                                       _GRE, _GRE_writing, _summer_intern,
+                                       _GRE_overall, _GRE_verbal, _GRE_writing, 
+                                       _research_intern, _company_intern,
                                        _paper, _final_decision);
         int _offer_num, _school, _degree;
         fscanf(fp, "%d", &_offer_num);
@@ -103,16 +222,20 @@ StudentInfo *StudentInfo::ReadInOne(const char *filepath) {
     double _GPA;
     double _IELTS;
     int _TOEFL;
-    int _GRE;
+    double _GRE_overall;
+    double _GRE_verbal;
     double _GRE_writing;
-    int _summer_intern;
+    int _research_intern;
+    int _company_intern;
     int _paper;
     fp = fopen(filepath, "r");
-    fscanf(fp, "%d%lf%lf%d%d%lf%d%d", &_school,
-           &_GPA, &_IELTS, &_TOEFL, &_GRE, &_GRE_writing,
-           &_summer_intern, &_paper);
+    fscanf(fp, "%d%lf%lf%d%lf%lf%lf%d%d%d", &_school,
+                  &_GPA, &_IELTS, &_TOEFL, &_GRE_overall,
+                  &_GRE_verbal, &_GRE_writing, &_research_intern, 
+                  &_company_intern, &_paper);
     student_info = new StudentInfo(_school, _GPA, _IELTS, _TOEFL,
-                                   _GRE, _GRE_writing, _summer_intern,
+                                   _GRE_overall, _GRE_verbal, _GRE_writing, 
+                                   _research_intern, _company_intern,
                                    _paper, 0);
     fclose(fp);
     return student_info;
@@ -122,14 +245,9 @@ void StudentInfo::GetProperties(StudentInfo *a,
                                 StudentInfo *b,
                                 vector<double> &properties) {
     properties.clear();
-    properties.push_back(School::GetChinaSchoolRank(a->school) - 
-            School::GetChinaSchoolRank(b->school));
-    properties.push_back(a->GPA - b->GPA);
-    properties.push_back(a->IELTS - b->IELTS);
-    properties.push_back(a->GRE - b->GRE);
-    properties.push_back(a->GRE_writing - b->GRE_writing);
-    properties.push_back(a->summer_intern - b->summer_intern);
-    properties.push_back(a->paper - b->paper);
+    for (int i = 0; i < StudentInfo::attributes_num; ++i){
+        properties.push_back(a->attributes[i] - b->attributes[i]);
+    }
 }
 
 void StudentInfo::GetSimilarity(StudentInfo *a, 
