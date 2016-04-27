@@ -13,6 +13,8 @@ using namespace std;
 StudentCluster ConstructStudentClusterFromInput() {
 	int num_students, num_schools;
 
+	cerr << "Reading....0" << endl;
+
 	freopen("../MachineLearning/IOFiles/student_ids_for_school", "r", stdin);
 	scanf("%d%d", &num_students, &num_schools);
 	vector<vector<int> > student_ids_accepted_by_school;
@@ -27,32 +29,40 @@ StudentCluster ConstructStudentClusterFromInput() {
 		student_ids_accepted_by_school.push_back(students);	
 	}
 	fclose(stdin);
+
+	cerr << "Reading.....1" << endl;
 	
-	freopen("../MachineLearning/IOFiles/StudentSimilarityMatrix", "r", stdin);
+	freopen("../MachineLearning/IOFiles/StudentSimi*", "r", stdin);
 	double **distance = (double**)calloc(num_students, sizeof(double*));
 	double *tmp = (double*)calloc(num_students, sizeof(double));
 	for (int i = 0; i < num_students; ++i) {
 		distance[i] = (double*)calloc(i, sizeof(double));
-		for (int j = 0; j < num_students; ++i) {
-			scanf("%lf", tmp[j]);
+		for (int j = 0; j < num_students; ++j) {
+			scanf("%lf", &tmp[j]);
 		}
 		for (int j = 0; j < i; ++j) {
 			distance[i][j] = tmp[j];
 			//scanf("%lf", &distance[i][j]);
 		}
 	}
-	delete [] tmp;
 	fclose(stdin);
+	
+	cerr << "Reading.....2" << endl;
+	
 	StudentCluster studentCluster(num_students, num_schools, distance, 
 			student_ids_accepted_by_school);
+	
 	return studentCluster;
 }
 
 void OutputSchoolsForStudents(StudentCluster studentCluster) {
-	freopen("school_ids_for_student", "w", stdou);
+	cerr << "Output.....-1" << endl;
+
+	freopen("school_ids_for_student", "w", stdout);
 
 	int num_students = studentCluster.GetNumStudents();
 	for (int student_id = 0; student_id < num_students; ++student_id) {
+		cerr << "Output....." << student_id << endl;
 		unordered_set<int> school_ids = 
 				studentCluster.GetSchoolIdsForStudent(student_id);
 		printf("%lu ", school_ids.size());

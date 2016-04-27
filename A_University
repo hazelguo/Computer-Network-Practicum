@@ -1,6 +1,4 @@
-// The first number is id.
-// The second number is ranking. Better schools has small ranking. Some school' rankings are -1, which means those schools are not in top50. I think we can simply dicard those schools.
-// Delete above comments if you like.
+59
 0 -1 George Washington University, GWU
 1 17.667 Columbia University, Columbia
 2 7.5 Cornell University, Cornell

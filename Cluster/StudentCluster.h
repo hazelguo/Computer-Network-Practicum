@@ -29,6 +29,8 @@ public:
     unordered_set<int> GetSchoolIdsForStudent(int student_id);
 
 private:
+		double GetMaxCluster(int *cluster_ids);
+
     /**
      * Calculates cost function for school 'school_id' within cluster result 'cluster_ids'.
      *

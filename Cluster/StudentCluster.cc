@@ -1,10 +1,12 @@
 #include "StudentCluster.h"
 
 #include <cstdlib>
+#include <iostream>
+#include <unordered_map>
 
 #include "cluster.h"
 
-const int knpass = 10;
+const int knpass = 100;
 
 StudentCluster::StudentCluster(int num_students,
                  int num_schools,
@@ -24,11 +26,6 @@ StudentCluster::StudentCluster(int num_students,
     }
 
     _school_ids_for_student.clear();
-    unordered_set<int> empty_set;
-    empty_set.clear();
-    for (int i = 0; i < _num_students; ++i) {
-        _school_ids_for_student.push_back(empty_set);
-    }
 }
 
 StudentCluster::~StudentCluster() {
@@ -58,17 +55,50 @@ unordered_set<int> StudentCluster::GetSchoolIdsForStudent(int student_id) {
 // Private methods for class StudentCluster.
 
 int StudentCluster::GetCostOfSchoolWithinClusterIds(int school_id, int *cluster_ids) {
-    int cost = 1;
+		int cost = 0;
     for (int i = 0; i < _student_ids_accepted_by_school[school_id].size(); ++i) {
-        for (int j = i+1; j < _student_ids_accepted_by_school[school_id].size(); ++j) {
+        for (int j = 0; j < _student_ids_accepted_by_school[school_id].size(); ++j) {
             cost += (cluster_ids[i] != cluster_ids[j]);
         }
     }
-    return cost;
+    return max(cost, 1);
+}
+
+#define sqr(p) ((p)*(p))
+double StudentCluster::GetMaxCluster(int *cluster_ids) {
+	double re = 0;
+	int sum = 0;
+	int num = 0;
+	unordered_map<int, int> count;
+	count.clear();
+	for (int i = 0; i < _num_students; ++i) {
+		count[cluster_ids[i]]++;
+	}
+	for (unordered_map<int, int>::iterator iter = count.begin(); iter != count.end(); ++iter) {
+		sum += iter->second;
+		++ num;
+	}
+	double ave = sum / num;
+	for (unordered_map<int, int>::iterator iter = count.begin(); iter != count.end(); ++iter) {
+		re += sqr(iter->second-ave);
+	}
+	re /= num;
+	cerr << re << endl;
+	if (re < 1) {
+		re = 1;
+	}
+	return re;
 }
 
 void StudentCluster::CalcClusterResult() {
-    double error;
+    unordered_set<int> empty_set;
+    empty_set.clear();
+    for (int i = 0; i < _num_students; ++i) {
+        _school_ids_for_student.push_back(empty_set);
+    }
+    
+		int M;
+		double error;
     int ifound;
     int *cluster_ids;
     vector<double> min_cost_for_school(_num_schools, (double)INT_MAX);
@@ -77,10 +107,14 @@ void StudentCluster::CalcClusterResult() {
         cluster_ids = (int*)calloc(_num_students, sizeof(int));
         kmedoids(i, _num_students, _distance, knpass, cluster_ids, &error, &ifound);
         _cluster_ids_for_k_value.push_back(cluster_ids);
-
-        error = max(1, log(max(error, 1)));
+				
+				error = max(1, sqrt(error));
+        //error = max(1, log(error));
+				M = GetMaxCluster(cluster_ids);
         for (int school_id = 0; school_id < _num_schools; ++school_id) {
-            double cost = GetCostOfSchoolWithinClusterIds(school_id, cluster_ids) * error;
+						double costfunc = GetCostOfSchoolWithinClusterIds(school_id, cluster_ids);
+						
+            double cost = costfunc * error * M;
             if (cost < min_cost_for_school[school_id]) {
                 min_cost_for_school[school_id] = cost;
                 _k_value_for_school[school_id] = i-1;

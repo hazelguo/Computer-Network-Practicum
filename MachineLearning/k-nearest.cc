@@ -5,8 +5,10 @@
 #include <queue>
 #include <vector>
 #include <unordered_set>
+#include <set>
 
 const int k = 3;
+const int max_rec = 7;
 
 using namespace std;
 
@@ -32,7 +34,8 @@ double calculate_similarity(StudentInfo* a, StudentInfo* b){
 void GetInputForKStudentsToSchools(const int& student_num,
 		vector<unordered_set<int> >* school_ids_for_student, 
 		vector<SchoolScore>* school_score) {
-	freopen("../Cluster/school_ids_for_student", "r", stdin);
+	//freopen("../Cluster/school_ids_for_student", "r", stdin);
+	//freopen("IOFiles/school_ids_for_student", "r", stdin);
 	unordered_set<int> school_ids;
 	for (int student = 0; student < student_num; ++student) {
 		int num_school;
@@ -56,55 +59,88 @@ void GetInputForKStudentsToSchools(const int& student_num,
 		char name[100];
 		scanf("%d %lf", &id, &score);
 		gets(name);
+		if (score == -1) continue;
 		school_score->push_back(SchoolScore(score, name, id));
 	} 
 	fclose(stdin);
 	sort(school_score->begin(), school_score->end());
+//	for (vector<SchoolScore>::iterator iter = school_score->begin();
+//			iter != school_score->end(); ++iter) {
+//		cout << iter->_score << " " << iter->_id << " " << iter->_name << endl;
+//	}
 }
 
-void GetInputForOneStudent(StudentInfo *student_info) {
+StudentInfo *GetInputForOneStudent() {
+	int _school;
+	double _GPA;
+	double _IELTS;
+	int _TOEFL;
+	double _GRE_overall;
+	double _GRE_verbal;
+	double _GRE_writing;
+	int _research_intern;
+	int _company_intern;
+	int _paper;
 	printf("Please enter the id of your current university: ");
-	scanf("%d", &student_info->school);
+	scanf("%d", &_school);
 	printf("Please enter your GPA: ");
-	scanf("%lf", &student_info->GPA);
+	scanf("%lf", &_GPA);
 	printf("Please enter your IELTS score (enter -1 if you don't have IELTS score): ");
-	scanf("%lf", &student_info->IELTS);
+	scanf("%lf", &_IELTS);
 	printf("Please enter your TOEFL score (enter -1 if not): ");
-	scanf("%d", &student_info->TOEFL);
+	scanf("%d", &_TOEFL);
 	printf("Please enter your overall GRE score (enter -1 if not): ");
-	scanf("%lf", &student_info->GRE_overall);
+	scanf("%lf", &_GRE_overall);
 	printf("Please enter your GRE verbal score (enter -1 if not): ");
-	scanf("%lf", &student_info->GRE_verbal);
+	scanf("%lf", &_GRE_verbal);
 	printf("Please enter your GRE writing score (enter -1 if not): ");
-	scanf("%lf", &student_info->GRE_writing);
+	scanf("%lf", &_GRE_writing);
 	printf("Please enter the number of research projects you have participated: ");
-	scanf("%d", &student_info->research_intern);
+	scanf("%d", &_research_intern);
 	printf("Please enter the number of company internship: ");
-	scanf("%d", &student_info->company_intern);
+	scanf("%d", &_company_intern);
 	printf("Please enter the number of papers you have participated: ");
-	scanf("%d", &student_info->paper);
+	scanf("%d", &_paper);
+	return new StudentInfo(_school, _GPA, _IELTS, _TOEFL, _GRE_overall,
+			_GRE_verbal, _GRE_writing, _research_intern, _company_intern, _paper, -1);
 }
 
 int main(){
 
-	StudentInfo *student_info;
+	//StudentInfo *student_info;
+	vector<StudentInfo *> input_info;
 	vector<StudentInfo*> students_info;
 	StudentSimilarity tmp;
 	priority_queue<StudentSimilarity> pq;
     BP_neural_net.GetWeightAndThreshold();
     School::ReadIn("IOFiles/USASchool.in", "IOFiles/ChinaSchool.in");
     StudentInfo::ReadIn(students_info, "IOFiles/StudentsInfo.in");
-//    GetInputForOneStudent(student_info);
 		StudentInfo::Standardize(students_info);
+  StudentInfo *student_info = GetInputForOneStudent();
+	input_info.push_back(student_info);  
+	//GetInputForOneStudent(student_info);
+	StudentInfo::Standardize(input_info);
 	
 	//By gzh: generate accepted student ids for each school.
-	freopen("IOFiles/student_ids_for_school", "w", stdout);
+	freopen("IOFiles/RejectInfo", "r", stdin);
+	int num_rej;
+	set<int> rej;
+	scanf("%d", &num_rej);
+	for (int i = 0; i < num_rej; ++i) {
+		int a;
+		scanf("%d", &a);
+		rej.insert(a);
+	}
+	fclose(stdin);
+
+/*	freopen("IOFiles/student_ids_for_school", "w", stdout);
 	vector<vector<int> > student_ids;
 	vector<int> ttmp;
 	for (int i = 0; i < 100; ++i) {
 		student_ids.push_back(ttmp);
 	}
 	for (int i = 0; i < students_info.size(); ++i) {
+		if (rej.find(i) != rej.end()) continue;
 		for (vector<Offer>::iterator one_offer = students_info[i]->offers.begin();
 				one_offer != students_info[i]->offers.end(); ++one_offer) {
 			student_ids[one_offer->school].push_back(i);
@@ -123,8 +159,27 @@ int main(){
 		}
 		printf("\n");
 	}
+	fclose(stdout);*/
+/*	freopen("IOFiles/school_ids_for_student", "w", stdout);
+	vector<vector<int> > student_ids;
+	vector<int> ttmp;
+	for (int i = 0; i < 100; ++i) {
+		student_ids.push_back(ttmp);
+	}
+	for (int i = 0; i < students_info.size(); ++i) {
+		if (rej.find(i) != rej.end()) {
+			printf("0\n");
+			continue;
+		}
+		printf("%lu ", students_info[i]->offers.size());
+		for (vector<Offer>::iterator one_offer = students_info[i]->offers.begin();
+				one_offer != students_info[i]->offers.end(); ++one_offer) {
+			printf("%d ", one_offer->school);
+		}
+		printf("\n");
+	}	
 	fclose(stdout);
-	return 0;
+	return 0;*/
 
 	int student_num = students_info.size();
 	for(int i = 0; i < student_num; ++i){
@@ -147,6 +202,11 @@ int main(){
 	}
 	fclose(fp);
 */
+/*	while (!pq.empty()) {
+		printf("%d ", pq.top().student_id);
+		pq.pop();	
+	}*/
+//	return 0;
 
 	vector<unordered_set<int> > school_ids_for_student;
 	vector<SchoolScore> school_score;
@@ -162,7 +222,11 @@ int main(){
 	}
 	vector<string> school_recommendation;
 	k_students_to_schools->SchoolRecommendation(k_students, &school_recommendation);
-		
+	int num_rec = school_recommendation.size();
+	if (num_rec > max_rec) num_rec = max_rec;
+	for (int i = 1; i < num_rec; ++i) {
+		cout << school_recommendation[i] << endl;
+	}
 	return 0;
 	
 }
