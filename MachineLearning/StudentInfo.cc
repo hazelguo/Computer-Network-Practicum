@@ -257,6 +257,21 @@ void StudentInfo::GetSimilarity(StudentInfo *a,
     int same_offer_num = 0;
     int size_a = a->offers.size();
     int size_b = b->offers.size();
+    double min_a = 50;
+    double min_b = 50;
+    for (int i = 0; i < size_a; ++i){
+        if (School::A_school[a->offers[i].school]->rank >= -0.0001) {
+            min_a = min(min_a, School::A_school[a->offers[i].school]->rank 
+                * (1 + (-0.2 * a->offers[i].degree)));
+        }
+    }
+    for (int i = 0; i < size_b; ++i){
+        if (School::A_school[b->offers[i].school]->rank >= -0.0001) {
+            min_b = min(min_b, School::A_school[b->offers[i].school]->rank 
+                * (1 + (-0.2 * b->offers[i].degree)));
+        }
+    }
+    /*
     int pointer_a = 0, pointer_b = 0;
     while ((pointer_a < size_a) && (pointer_b < size_b)) {
         if (a->offers[pointer_a] == b->offers[pointer_b]) {
@@ -275,4 +290,7 @@ void StudentInfo::GetSimilarity(StudentInfo *a,
         similarity /= 2;
         same_offer_num --;
     }
+    */
+    valuable = true;
+    similarity = (min_a - min_b) / 50.0;
 }
