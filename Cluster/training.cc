@@ -12,16 +12,9 @@ using namespace std;
 
 StudentCluster ConstructStudentClusterFromInput() {
 	int num_students, num_schools;
+
+	freopen("../MachineLearning/IOFiles/student_ids_for_school", "r", stdin);
 	scanf("%d%d", &num_students, &num_schools);
-
-	double **distance = (double**)calloc(num_students, sizeof(double*));
-	for (int i = 0; i < num_students; ++i) {
-		distance[i] = (double*)calloc(i, sizeof(double));
-		for (int j = 0; j < i; ++j) {
-			scanf("%lf", &distance[i][j]);
-		}
-	}
-
 	vector<vector<int> > student_ids_accepted_by_school;
 	for (int i = 0; i < num_schools; ++i) {
 		vector<int> students;
@@ -33,7 +26,23 @@ StudentCluster ConstructStudentClusterFromInput() {
 		}
 		student_ids_accepted_by_school.push_back(students);	
 	}
-
+	fclose(stdin);
+	
+	freopen("../MachineLearning/IOFiles/StudentSimilarityMatrix", "r", stdin);
+	double **distance = (double**)calloc(num_students, sizeof(double*));
+	double *tmp = (double*)calloc(num_students, sizeof(double));
+	for (int i = 0; i < num_students; ++i) {
+		distance[i] = (double*)calloc(i, sizeof(double));
+		for (int j = 0; j < num_students; ++i) {
+			scanf("%lf", tmp[j]);
+		}
+		for (int j = 0; j < i; ++j) {
+			distance[i][j] = tmp[j];
+			//scanf("%lf", &distance[i][j]);
+		}
+	}
+	delete [] tmp;
+	fclose(stdin);
 	StudentCluster studentCluster(num_students, num_schools, distance, 
 			student_ids_accepted_by_school);
 	return studentCluster;
