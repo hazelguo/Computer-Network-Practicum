@@ -63,17 +63,6 @@ void GetInputForKStudentsToSchools(const int& student_num,
 }
 
 void GetInputForOneStudent(StudentInfo *student_info) {
-	int school;
-	double GPA;
-	double IELTS;
-	int TOEFL;
-	double GRE_overall;
-	double GRE_verbal;
-	double GRE_writing;
-	int research_intern;
-	int company_intern;
-	int paper;
-	
 	printf("Please enter the id of your current university: ");
 	scanf("%d", &student_info->school);
 	printf("Please enter your GPA: ");
@@ -105,8 +94,38 @@ int main(){
     BP_neural_net.GetWeightAndThreshold();
     School::ReadIn("IOFiles/USASchool.in", "IOFiles/ChinaSchool.in");
     StudentInfo::ReadIn(students_info, "IOFiles/StudentsInfo.in");
-    GetInputForOneStudent(student_info);
+//    GetInputForOneStudent(student_info);
 		StudentInfo::Standardize(students_info);
+	
+	//By gzh: generate accepted student ids for each school.
+	freopen("IOFiles/student_ids_for_school", "w", stdout);
+	vector<vector<int> > student_ids;
+	vector<int> tmp;
+	for (int i = 0; i < 100; ++i) {
+		student_ids.push_back(tmp);
+	}
+	for (int i = 0; i < students_info.size(); ++i) {
+		for (vector<Offer>::iterator one_offer = students_info[i].offers.begin();
+				one_offer != students_info[i].offers.end(); ++one_offer) {
+			student_ids[one_offer->school].push_back(i);
+		}
+	}	
+	while (student_ids.back().size() == 0) {
+		student_ids.pop_back();
+	}
+	printf("%d %d\n", students_info.size(), student_ids.size());
+	for (vector<vector<int> >::iterator iter = student_ids.begin();
+			iter != student_ids.end(); ++iter) {
+		printf("%d ", iter->size());
+		for (vector<int>::iterator one_school = iter->begin(); 
+				one_school != iter->end(); ++one_school) {
+			printf("%d ", *one_school);
+		}
+		printf("\n");
+	}
+	fclose(stdout);
+	return 0;
+
 	int student_num = students_info.size();
 	for(int i = 0; i < student_num; ++i){
 		tmp.similarity = calculate_similarity(students_info[i], student_info);
