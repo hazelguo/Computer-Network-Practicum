@@ -62,6 +62,40 @@ void GetInputForKStudentsToSchools(const int& student_num,
 	sort(school_score->begin(), school_score->end());
 }
 
+void GetInputForOneStudent(StudentInfo *student_info) {
+	int school;
+	double GPA;
+	double IELTS;
+	int TOEFL;
+	double GRE_overall;
+	double GRE_verbal;
+	double GRE_writing;
+	int research_intern;
+	int company_intern;
+	int paper;
+	
+	printf("Please enter the id of your current university: ");
+	scanf("%d", &student_info->school);
+	printf("Please enter your GPA: ");
+	scanf("%lf", &student_info->GPA);
+	printf("Please enter your IELTS score (enter -1 if you don't have IELTS score): ");
+	scanf("%lf", &student_info->IELTS);
+	printf("Please enter your TOEFL score (enter -1 if not): ");
+	scanf("%d", &student_info->TOEFL);
+	printf("Please enter your overall GRE score (enter -1 if not): ");
+	scanf("%lf", &student_info->GRE_overall);
+	printf("Please enter your GRE verbal score (enter -1 if not): ");
+	scanf("%lf", &student_info->GRE_verbal);
+	printf("Please enter your GRE writing score (enter -1 if not): ");
+	scanf("%lf", &student_info->GRE_writing);
+	printf("Please enter the number of research projects you have participated: ");
+	scanf("%d", &student_info->research_intern);
+	printf("Please enter the number of company internship: ");
+	scanf("%d", &student_info->company_intern);
+	printf("Please enter the number of papers you have participated: ");
+	scanf("%d", &student_info->paper);
+}
+
 int main(){
 
 	StudentInfo *student_info;
@@ -71,7 +105,8 @@ int main(){
     BP_neural_net.GetWeightAndThreshold();
     School::ReadIn("IOFiles/USASchool.in", "IOFiles/ChinaSchool.in");
     StudentInfo::ReadIn(students_info, "IOFiles/StudentsInfo.in");
-    StudentInfo::Standardize(students_info);
+    GetInputForOneStudent(student_info);
+		StudentInfo::Standardize(students_info);
 	int student_num = students_info.size();
 	for(int i = 0; i < student_num; ++i){
 		tmp.similarity = calculate_similarity(students_info[i], student_info);
