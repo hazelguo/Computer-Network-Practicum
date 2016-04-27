@@ -100,23 +100,23 @@ int main(){
 	//By gzh: generate accepted student ids for each school.
 	freopen("IOFiles/student_ids_for_school", "w", stdout);
 	vector<vector<int> > student_ids;
-	vector<int> tmp;
+	vector<int> ttmp;
 	for (int i = 0; i < 100; ++i) {
-		student_ids.push_back(tmp);
+		student_ids.push_back(ttmp);
 	}
 	for (int i = 0; i < students_info.size(); ++i) {
-		for (vector<Offer>::iterator one_offer = students_info[i].offers.begin();
-				one_offer != students_info[i].offers.end(); ++one_offer) {
+		for (vector<Offer>::iterator one_offer = students_info[i]->offers.begin();
+				one_offer != students_info[i]->offers.end(); ++one_offer) {
 			student_ids[one_offer->school].push_back(i);
 		}
 	}	
 	while (student_ids.back().size() == 0) {
 		student_ids.pop_back();
 	}
-	printf("%d %d\n", students_info.size(), student_ids.size());
+	printf("%ld %ld\n", students_info.size(), student_ids.size());
 	for (vector<vector<int> >::iterator iter = student_ids.begin();
 			iter != student_ids.end(); ++iter) {
-		printf("%d ", iter->size());
+		printf("%ld ", iter->size());
 		for (vector<int>::iterator one_school = iter->begin(); 
 				one_school != iter->end(); ++one_school) {
 			printf("%d ", *one_school);
