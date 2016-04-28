@@ -62,7 +62,7 @@ class StudentInfo {
         //void CalculateAverage();
         //void Normalize();
         static void Standardize(vector<StudentInfo*> &students_info);
-        static void Standardize(StudentInfo &students_info);
+        static void Standardize(StudentInfo *student_info);
         static void ReadIn(vector<StudentInfo*> &students_info, const char *filepath);
         static StudentInfo *ReadInOne(const char *filepath);
         static void GetProperties(StudentInfo *a,

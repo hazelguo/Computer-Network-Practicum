@@ -176,6 +176,18 @@ void StudentInfo::Standardize(vector<StudentInfo*> &students_info) {
     }
 }
 
+void StudentInfo::Standardize(StudentInfo *student_info) {
+    for (int j = 0; j < attributes_num; ++j) {
+        if (student_info->attributes[j] >= -0.0001) {
+            student_info->attributes[j] =
+                (student_info->attributes[j] - average[j]) / std[j];
+        }
+        else {
+            student_info->attributes[j] = 0;
+        }
+    }
+}
+
 void StudentInfo::ReadIn(vector<StudentInfo*> &students_info,
                          const char *filepath) {
     FILE *fp;

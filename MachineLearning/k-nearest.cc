@@ -116,12 +116,12 @@ int main(){
     BP_neural_net.GetWeightAndThreshold();
     School::ReadIn("IOFiles/USASchool.in", "IOFiles/ChinaSchool.in");
     StudentInfo::ReadIn(students_info, "IOFiles/StudentsInfo.in");
-		StudentInfo::Standardize(students_info);
+	StudentInfo::Standardize(students_info);
     
   StudentInfo *student_info = GetInputForOneStudent();
-	input_info.push_back(student_info);  
+	//input_info.push_back(student_info);  
 	//GetInputForOneStudent(student_info);
-	StudentInfo::Standardize(input_info);    
+	StudentInfo::Standardize(student_info);    
     
 	cerr << student_info->GPA << " " << student_info->school << " " << student_info->GRE_overall << " " << student_info->GRE_verbal << endl;	
 	cerr << students_info[0]->GPA << " " << students_info[0]->school << " " << students_info[0]->GRE_overall << " " << students_info[0]->GRE_verbal << endl;	
