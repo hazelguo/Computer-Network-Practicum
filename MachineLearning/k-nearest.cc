@@ -7,7 +7,7 @@
 #include <unordered_set>
 #include <set>
 
-const int k = 2;
+const int k = 3;
 const int max_rec = 7;
 
 using namespace std;
@@ -34,8 +34,8 @@ double calculate_similarity(StudentInfo* a, StudentInfo* b){
 void GetInputForKStudentsToSchools(const int& student_num,
 		vector<unordered_set<int> >* school_ids_for_student, 
 		vector<SchoolScore>* school_score) {
-	freopen("../Cluster/school_ids_for_student", "r", stdin);
-	//freopen("IOFiles/school_ids_for_student", "r", stdin);
+	//freopen("../Cluster/school_ids_for_student", "r", stdin);
+	freopen("IOFiles/school_ids_for_student", "r", stdin);
 	unordered_set<int> school_ids;
 	for (int student = 0; student < student_num; ++student) {
 		int num_school;
@@ -108,8 +108,6 @@ StudentInfo *GetInputForOneStudent() {
 #define sqr(p) ((p)*(p))
 int main(){
 
-	//StudentInfo *student_info;
-	vector<StudentInfo *> input_info;
 	vector<StudentInfo*> students_info;
 	StudentSimilarity tmp;
 	priority_queue<StudentSimilarity> pq;
@@ -119,13 +117,8 @@ int main(){
 	StudentInfo::Standardize(students_info);
     
   StudentInfo *student_info = GetInputForOneStudent();
-	//input_info.push_back(student_info);  
-	//GetInputForOneStudent(student_info);
 	StudentInfo::Standardize(student_info);    
     
-	cerr << student_info->GPA << " " << student_info->school << " " << student_info->GRE_overall << " " << student_info->GRE_verbal << endl;	
-	cerr << students_info[0]->GPA << " " << students_info[0]->school << " " << students_info[0]->GRE_overall << " " << students_info[0]->GRE_verbal << endl;	
-	
 	//By gzh: generate accepted student ids for each school.
 	/*freopen("IOFiles/RejectInfo", "r", stdin);
 	int num_rej;
@@ -189,12 +182,12 @@ int main(){
 
 	int student_num = students_info.size();
 	for(int i = 0; i < student_num; ++i){
-		tmp.similarity = calculate_similarity(students_info[i], student_info);
-		tmp.similarity = cube(tmp.similarity*100);
-		//double simi;
-		//bool valuable;
-		//StudentInfo::GetSimilarity(students_info[i], student_info, simi, valuable);
-		//tmp.similarity = fabs(simi); 
+		//tmp.similarity = calculate_similarity(students_info[i], student_info);
+		//tmp.similarity = cube(tmp.similarity*100);
+		double simi;
+		bool valuable;
+		StudentInfo::GetSimilarity(students_info[i], student_info, simi, valuable);
+		tmp.similarity = fabs(simi); 
 		tmp.student_id = i;
 		if (pq.size() < k) pq.push(tmp);
 		else{

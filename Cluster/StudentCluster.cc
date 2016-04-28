@@ -29,11 +29,11 @@ StudentCluster::StudentCluster(int num_students,
 }
 
 StudentCluster::~StudentCluster() {
-    free(_distance);
-    while (!_cluster_ids_for_k_value.empty()) {
-        free(_cluster_ids_for_k_value.back());
-        _cluster_ids_for_k_value.pop_back();
-    }
+//    free(_distance);
+//    while (!_cluster_ids_for_k_value.empty()) {
+//        free(_cluster_ids_for_k_value.back());
+//        _cluster_ids_for_k_value.pop_back();
+//    }
 }
 
 // Public methods for class StudentCluster.
@@ -122,13 +122,14 @@ void StudentCluster::CalcClusterResult() {
         kmedoids(i, _num_students, _distance, knpass, cluster_ids, &error, &ifound);
         _cluster_ids_for_k_value.push_back(cluster_ids);
 				
+				//cerr << cluster_ids[0] << " " << cluster_ids[1] << endl;	
 				//error = max(1, sqrt(error));
         //error = max(1, log(error));
 				M = GetMaxCluster(cluster_ids);
         for (int school_id = 0; school_id < _num_schools; ++school_id) {
 						double costfunc = GetCostOfSchoolWithinClusterIds(school_id, cluster_ids);
-            double cost = costfunc * max(error, 1) * M * sqrt(i);
-            cerr << i << ": " << costfunc << " " << error << " " << M << endl;
+            double cost = costfunc * sqrt(sqrt(max(error, 1)) * sqrt(M) * sqrt(i));
+						//cerr << costfunc << " " << error << " " << M << " " << i << endl;
 						if (cost < min_cost_for_school[school_id]) {
                 min_cost_for_school[school_id] = cost;
                 _k_value_for_school[school_id] = i-1;

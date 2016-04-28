@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cmath>
 
+#define cube(p) ((p)*(p)*(p))
 double sqr(double a) {
     return a * a;
 }
@@ -172,7 +173,9 @@ void StudentInfo::Standardize(vector<StudentInfo*> &students_info) {
             else {
                 students_info[i]->attributes[j] = 0;
             }
+					//	printf("%lf ", students_info[i]->attributes[j]);
         }
+			//printf("\n");
     }
 }
 
@@ -266,12 +269,18 @@ void StudentInfo::GetSimilarity(StudentInfo *a,
                                 StudentInfo *b,
                                 double &similarity,
                                 bool &valuable) {
-//		similarity = 10*(a->GPA-b->GPA) + (a->IELTS-b->IELTS) + (a->TOEFL-b->TOEFL)
-//							+ 0.5*(a->GRE_overall-b->GRE_overall) + 0.5*(a->GRE_verbal-b->GRE_verbal)
-//							+ 5*(a->research_intern-b->research_intern) + 5*(a->company_intern-b->company_intern)
-//								+ 30*(a->paper-b->paper);
-//		valuable = 1;
-//		return;
+		similarity = 700*cube(b->attributes[0]-a->attributes[0]) 
+							+ 1000.0*cube(a->attributes[1]-b->attributes[1]) 
+							+ 100.0*(a->attributes[3]-b->attributes[3])
+							+ 50*(a->attributes[4]-b->attributes[4]) 
+							+ 50*(a->attributes[5]-b->attributes[5])
+							+ 10*(a->attributes[6]-b->attributes[6]) 
+							+ 300*cube(a->attributes[7]-b->attributes[7])
+							+ 300*cube(a->attributes[8]-b->attributes[8])
+							+ 500*cube(a->attributes[9]-b->attributes[9]);
+
+		valuable = 1;
+		return;
 			
 
     int same_offer_num = 0;
