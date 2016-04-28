@@ -254,6 +254,14 @@ void StudentInfo::GetSimilarity(StudentInfo *a,
                                 StudentInfo *b,
                                 double &similarity,
                                 bool &valuable) {
+//		similarity = 10*(a->GPA-b->GPA) + (a->IELTS-b->IELTS) + (a->TOEFL-b->TOEFL)
+//							+ 0.5*(a->GRE_overall-b->GRE_overall) + 0.5*(a->GRE_verbal-b->GRE_verbal)
+//							+ 5*(a->research_intern-b->research_intern) + 5*(a->company_intern-b->company_intern)
+//								+ 30*(a->paper-b->paper);
+//		valuable = 1;
+//		return;
+			
+
     int same_offer_num = 0;
     int size_a = a->offers.size();
     int size_b = b->offers.size();

@@ -57,7 +57,7 @@ unordered_set<int> StudentCluster::GetSchoolIdsForStudent(int student_id) {
 int StudentCluster::GetCostOfSchoolWithinClusterIds(int school_id, int *cluster_ids) {
 		int cost = 0;
     for (int i = 0; i < _student_ids_accepted_by_school[school_id].size(); ++i) {
-        for (int j = 0; j < _student_ids_accepted_by_school[school_id].size(); ++j) {
+        for (int j = i+1; j < _student_ids_accepted_by_school[school_id].size(); ++j) {
             cost += (cluster_ids[i] != cluster_ids[j]);
         }
     }
@@ -66,7 +66,7 @@ int StudentCluster::GetCostOfSchoolWithinClusterIds(int school_id, int *cluster_
 
 #define sqr(p) ((p)*(p))
 double StudentCluster::GetMaxCluster(int *cluster_ids) {
-	double re = 0;
+/*	double re = 0;
 	int sum = 0;
 	int num = 0;
 	unordered_map<int, int> count;
@@ -87,6 +87,20 @@ double StudentCluster::GetMaxCluster(int *cluster_ids) {
 	if (re < 1) {
 		re = 1;
 	}
+	return re;*/
+
+	double re = 0;
+	unordered_map<int, int> count;
+	count.clear();
+	for (int i = 0; i < _num_students; ++i) {
+		count[cluster_ids[i]]++;
+	}
+	for (unordered_map<int, int>::iterator iter = count.begin(); iter != count.end(); ++iter) {
+		re = max(re, iter->second);
+	}
+	if (re < 1) {
+		re = 1;
+	}
 	return re;
 }
 
@@ -103,19 +117,19 @@ void StudentCluster::CalcClusterResult() {
     int *cluster_ids;
     vector<double> min_cost_for_school(_num_schools, (double)INT_MAX);
 
-    for (int i = 1; i <= _num_students; ++i) {
+		for (int i = 1; i <= _num_students; ++i) {
         cluster_ids = (int*)calloc(_num_students, sizeof(int));
         kmedoids(i, _num_students, _distance, knpass, cluster_ids, &error, &ifound);
         _cluster_ids_for_k_value.push_back(cluster_ids);
 				
-				error = max(1, sqrt(error));
+				//error = max(1, sqrt(error));
         //error = max(1, log(error));
 				M = GetMaxCluster(cluster_ids);
         for (int school_id = 0; school_id < _num_schools; ++school_id) {
 						double costfunc = GetCostOfSchoolWithinClusterIds(school_id, cluster_ids);
-						
-            double cost = costfunc * error * M;
-            if (cost < min_cost_for_school[school_id]) {
+            double cost = costfunc * max(error, 1) * M * sqrt(i);
+            cerr << i << ": " << costfunc << " " << error << " " << M << endl;
+						if (cost < min_cost_for_school[school_id]) {
                 min_cost_for_school[school_id] = cost;
                 _k_value_for_school[school_id] = i-1;
             }

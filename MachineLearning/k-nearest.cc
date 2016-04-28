@@ -7,7 +7,7 @@
 #include <unordered_set>
 #include <set>
 
-const int k = 3;
+const int k = 2;
 const int max_rec = 7;
 
 using namespace std;
@@ -34,7 +34,7 @@ double calculate_similarity(StudentInfo* a, StudentInfo* b){
 void GetInputForKStudentsToSchools(const int& student_num,
 		vector<unordered_set<int> >* school_ids_for_student, 
 		vector<SchoolScore>* school_score) {
-	//freopen("../Cluster/school_ids_for_student", "r", stdin);
+	freopen("../Cluster/school_ids_for_student", "r", stdin);
 	//freopen("IOFiles/school_ids_for_student", "r", stdin);
 	unordered_set<int> school_ids;
 	for (int student = 0; student < student_num; ++student) {
@@ -104,7 +104,8 @@ StudentInfo *GetInputForOneStudent() {
 	return new StudentInfo(_school, _GPA, _IELTS, _TOEFL, _GRE_overall,
 			_GRE_verbal, _GRE_writing, _research_intern, _company_intern, _paper, -1);
 }
-
+#define cube(p) ((p)*(p)*(p))
+#define sqr(p) ((p)*(p))
 int main(){
 
 	//StudentInfo *student_info;
@@ -116,13 +117,17 @@ int main(){
     School::ReadIn("IOFiles/USASchool.in", "IOFiles/ChinaSchool.in");
     StudentInfo::ReadIn(students_info, "IOFiles/StudentsInfo.in");
 		StudentInfo::Standardize(students_info);
+    
   StudentInfo *student_info = GetInputForOneStudent();
 	input_info.push_back(student_info);  
 	//GetInputForOneStudent(student_info);
-	StudentInfo::Standardize(input_info);
+	StudentInfo::Standardize(input_info);    
+    
+	cerr << student_info->GPA << " " << student_info->school << " " << student_info->GRE_overall << " " << student_info->GRE_verbal << endl;	
+	cerr << students_info[0]->GPA << " " << students_info[0]->school << " " << students_info[0]->GRE_overall << " " << students_info[0]->GRE_verbal << endl;	
 	
 	//By gzh: generate accepted student ids for each school.
-	freopen("IOFiles/RejectInfo", "r", stdin);
+	/*freopen("IOFiles/RejectInfo", "r", stdin);
 	int num_rej;
 	set<int> rej;
 	scanf("%d", &num_rej);
@@ -133,7 +138,7 @@ int main(){
 	}
 	fclose(stdin);
 
-/*	freopen("IOFiles/student_ids_for_school", "w", stdout);
+	freopen("IOFiles/student_ids_for_school_tmp", "w", stdout);
 	vector<vector<int> > student_ids;
 	vector<int> ttmp;
 	for (int i = 0; i < 100; ++i) {
@@ -144,12 +149,13 @@ int main(){
 		for (vector<Offer>::iterator one_offer = students_info[i]->offers.begin();
 				one_offer != students_info[i]->offers.end(); ++one_offer) {
 			student_ids[one_offer->school].push_back(i);
+			printf("%d %d\n", i, one_offer->school);
 		}
 	}	
 	while (student_ids.back().size() == 0) {
 		student_ids.pop_back();
-	}
-	printf("%ld %ld\n", students_info.size(), student_ids.size());
+	}*/
+/*	printf("%ld %ld\n", students_info.size(), student_ids.size());
 	for (vector<vector<int> >::iterator iter = student_ids.begin();
 			iter != student_ids.end(); ++iter) {
 		printf("%ld ", iter->size());
@@ -184,6 +190,11 @@ int main(){
 	int student_num = students_info.size();
 	for(int i = 0; i < student_num; ++i){
 		tmp.similarity = calculate_similarity(students_info[i], student_info);
+		tmp.similarity = cube(tmp.similarity*100);
+		//double simi;
+		//bool valuable;
+		//StudentInfo::GetSimilarity(students_info[i], student_info, simi, valuable);
+		//tmp.similarity = fabs(simi); 
 		tmp.student_id = i;
 		if (pq.size() < k) pq.push(tmp);
 		else{
@@ -224,8 +235,12 @@ int main(){
 	k_students_to_schools->SchoolRecommendation(k_students, &school_recommendation);
 	int num_rec = school_recommendation.size();
 	if (num_rec > max_rec) num_rec = max_rec;
-	for (int i = 1; i < num_rec; ++i) {
+	for (int i = 0; i < num_rec; ++i) {
 		cout << school_recommendation[i] << endl;
+	}
+	while (!pq.empty()) {
+		printf("%d ", pq.top().student_id);
+		pq.pop();	
 	}
 	return 0;
 	

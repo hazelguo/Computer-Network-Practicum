@@ -9,7 +9,7 @@
 using namespace std;
 
 // Local methods for main.
-
+#define cube(p) ((p)*(p)*(p))
 StudentCluster ConstructStudentClusterFromInput() {
 	int num_students, num_schools;
 
@@ -32,7 +32,8 @@ StudentCluster ConstructStudentClusterFromInput() {
 
 	cerr << "Reading.....1" << endl;
 	
-	freopen("../MachineLearning/IOFiles/StudentSimi*", "r", stdin);
+	//freopen("../MachineLearning/IOFiles/StudentSimi*", "r", stdin);
+	freopen("../MachineLearning/IOFiles/Original*", "r", stdin);
 	double **distance = (double**)calloc(num_students, sizeof(double*));
 	double *tmp = (double*)calloc(num_students, sizeof(double));
 	for (int i = 0; i < num_students; ++i) {
@@ -41,7 +42,8 @@ StudentCluster ConstructStudentClusterFromInput() {
 			scanf("%lf", &tmp[j]);
 		}
 		for (int j = 0; j < i; ++j) {
-			distance[i][j] = tmp[j];
+			//distance[i][j] = fabs(tmp[j]);
+			distance[i][j] = cube(tmp[j] * 100);
 			//scanf("%lf", &distance[i][j]);
 		}
 	}
