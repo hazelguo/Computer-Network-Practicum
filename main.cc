@@ -11,7 +11,7 @@
 #include "Cluster/cluster.h"
 
 using namespace std;
-#define max_rec 7
+#define max_rec 5
 
 StudentInfo *GetInputForOneStudent() {
     int _school;
@@ -50,24 +50,20 @@ StudentInfo *GetInputForOneStudent() {
 
 void GetInputForKStudentsToSchools(const int& student_num,
                                    vector<SchoolScore>* school_score) {
-    FILE *uni = fopen("A_University", "w+");
-		FILE *map = fopen("A_mapping", "w+");
+    freopen("A_University", "r", stdin);
     int num_school;
-    fscanf(uni, "%d", &num_school);
+    scanf("%d", &num_school);
     for (int school = 0; school < num_school; ++school) {
         int id;
         double score;
         char name[100];
-        int a, alias;
-				fscanf(uni, "%d %lf", &id, &score);
-        fgets(name, 100, uni);
-				fscanf(map, "%d %d", &a, &alias);
+        scanf("%d %lf", &id, &score);
+        gets(name);
         if (score == -1) continue;
-        school_score->push_back(SchoolScore(score, alias, name, id));
+        school_score->push_back(SchoolScore(score, name, id));
     }
-    fclose(uni);
-    fclose(map);
-		sort(school_score->begin(), school_score->end());
+    fclose(stdin);
+    sort(school_score->begin(), school_score->end());
 }
 
 StudentCluster ConstructStudentClusterFromInput(vector<StudentInfo *> students_info) {
@@ -124,11 +120,7 @@ void OutputSchoolsForStudents(StudentCluster studentCluster) {
 		for (vector<SchoolScore>::iterator iter = school_score.begin();
 				iter != school_score.end(); ++iter) {
 			if (school_ids.find(iter->_id) != school_ids.end()) {
-				if (iter->_alias != -1) {
-					cout << iter->_alias << endl;
-				} else {
-					cout << "-1 " << iter->_name << endl;
-				}
+				cout << iter->_name << endl;
 				++ count;
 				if (count >= max_rec) break;
 			}

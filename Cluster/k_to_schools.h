@@ -9,12 +9,10 @@ using namespace std;
 
 struct SchoolScore {
 	double _score;
-	int _alias;
 	string _name;
 	int _id;
-	SchoolScore(const double& score, const int& alias, const char* name, const int& id) {
+	SchoolScore(const double& score, const char* name, const int& id) {
 		_score = score;
-		_alias = alias;
 		_name = name;
 		_id = id;
 	}

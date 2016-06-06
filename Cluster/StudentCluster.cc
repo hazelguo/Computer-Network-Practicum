@@ -6,7 +6,7 @@
 
 #include "cluster.h"
 
-const int knpass = 50;
+const int knpass = 100;
 
 StudentCluster::StudentCluster(int num_students,
                  int num_schools,
@@ -30,10 +30,10 @@ StudentCluster::StudentCluster(int num_students,
 
 StudentCluster::~StudentCluster() {
 //    free(_distance);
-    while (!_cluster_ids_for_k_value.empty()) {
-        free(_cluster_ids_for_k_value.back());
-        _cluster_ids_for_k_value.pop_back();
-    }
+//    while (!_cluster_ids_for_k_value.empty()) {
+//        free(_cluster_ids_for_k_value.back());
+//        _cluster_ids_for_k_value.pop_back();
+//    }
 }
 
 // Public methods for class StudentCluster.
