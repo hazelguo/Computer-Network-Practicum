@@ -96,7 +96,9 @@ StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
                          double _GRE_overall, double _GRE_verbal, double _GRE_writing,
                          int _research_intern, int _company_intern,
                          int _paper, int _final_decision) {
-    school = _school;
+    srand(time(0));
+
+		school = _school;
     GPA = _GPA;
     IELTS = _IELTS;
     TOEFL = _TOEFL;
@@ -105,8 +107,36 @@ StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
     GRE_writing = _GRE_writing;
     research_intern = _research_intern;
     company_intern = _company_intern;
-    paper = _paper;
-    final_decision = _final_decision;
+    //paper = _paper;
+		paper = 0;
+		int paper_num = (int)((double)_paper*ceil(sqrt((double)(rand()%100+1)))*0.1); // 1-1, 234-2, 56789-3		
+		for (int i = 0; i < paper_num; ++i) {
+			int paper_level = (int)ceil(sqrt((double)(rand()%196+1)));
+			if (paper_level == 1) {
+				paper += 10;
+			} else if (paper_level == 2) {
+				paper += 8;
+			} else if (paper_level == 3) {
+				paper += 6;
+			} else if (paper_level == 4) {
+				paper += 6;
+			} else if (paper_level == 5) {
+				paper += 4;
+			} else if (paper_level == 6) {
+				paper += 4;
+			} else if (paper_level == 7) {
+				paper += 2;
+			} else if (paper_level == 8) {
+				paper += 2;
+			} else if (paper_level == 9) {
+				paper += 1;
+			} else if (paper_level == 10) {
+				paper += 1;
+			}	
+		}	
+		cerr << paper << endl;
+ 
+		final_decision = _final_decision;
     offers.clear();
     attributes.clear();
     attributes.push_back(School::C_school[school]->rank);

@@ -46,7 +46,7 @@ class StudentInfo {
         double GRE_writing;
         int research_intern;
         int company_intern;
-        int paper;
+        double paper;
         int final_decision;
         vector<Offer> offers;
         vector<double> attributes;
