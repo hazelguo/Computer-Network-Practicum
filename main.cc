@@ -129,7 +129,8 @@ void OutputSchoolsForStudents(StudentCluster studentCluster) {
 
 int main(){
 		vector<StudentInfo*> students_info;
-    School::ReadIn("MachineLearning/IOFiles/USASchool.in", "MachineLearning/IOFiles/ChinaSchool.in");
+    //School::ReadIn("MachineLearning/IOFiles/USASchool.in", "MachineLearning/IOFiles/ChinaSchool.in");
+    School::ReadIn("A_University", "C_University");
 		StudentInfo::ReadIn(students_info, "MachineLearning/IOFiles/StudentsInfo.in");
     StudentInfo::Standardize(students_info);
     StudentInfo *student_info = GetInputForOneStudent();

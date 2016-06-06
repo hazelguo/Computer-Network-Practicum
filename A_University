@@ -1,48 +1,48 @@
 59
-0 -1 George Washington University, GWU
+0 90 George Washington University, GWU
 1 17.667 Columbia University, Columbia
 2 7.5 Cornell University, Cornell
 3 32 Duke University, Duke
 4 13 University of California-San Diego, UCSD
-5 20 University of Pennsylvania, UPenn
+5 16.667 University of Pennsylvania, UPenn
 6 3.5 Carnegie Mellon University, CMU
 7 34 University of Chicago, UChicago
 8 10.5 University of Michigan-Ann Arbor, UM-Ann Arbor, Umich
 9 24.5 Johns Hopkins University, JHU
 10 14.5 University of Southern California, USC
-11 10.75 Georgia Institute of Technology, Gatech
+11 9.75 Georgia Institute of Technology, Gatech
 12 36.667 Northwestern University, NU, NWU
 13 38.5 New York University, NYU
 14 42 Washington University in St. Louis, WUSTL
-15 -1 Georgetown University, GU
+15 33 Georgetown University, GU
 16 34 University of Virginia, UVa
-17 -1 Brandeis University, Brandeis
-18 -1 Northeastern Universit, NEU
-19 -1 Case Western Reserve University, CWRU
+17 97 Brandeis University, Brandeis
+18 65 Northeastern Universit, NEU
+19 79 Case Western Reserve University, CWRU
 20 25 The Pennsylvania State University, PSU
 21 42 Dartmouth College, Dartmouth
 22 46.667 Boston University, BU
 23 7.25 University of Illinois at Urbana-Champaign, UIUC
-24 -1 Syracuse University, SU
+24 74 Syracuse University, SU
 25 17.667 Rice
 26 -1 WPI 伍斯特理工
 27 -1 Stevens institute of technology 
-28 -1 The Ohio State University at Columbus
-29 -1 Clemson University
+28 31 The Ohio State University at Columbus
+29 150 Clemson University
 30 34 Brown University
-31 1.5 Stanford
-32 -1 RENSSELAER POLYTECHNIC INSTITUTE, RPI
-33 -1 Vanderbilt University, Vandy
-34 -1 University of California at Santa Cruz, UCSC
+31 1.4 Stanford
+32 170 RENSSELAER POLYTECHNIC INSTITUTE, RPI
+33 198 Vanderbilt University, Vandy
+34 58 University of California at Santa Cruz, UCSC
 35 29.333 Yale
 36 11 University of California Los Angeles, UCLA
 37 -1 The University of Texas at Dallas, UTD
 38 16.45 University of California Irvine, UCI
 39 31 University of California, Santa Barbara, UCSB
 40 -1 Rutgers University, RU
-41 -1 University of Central Florida, UCF
-42 -1 University of Minnesota Duluth, UMD
-43 -1 University of California Davis, UCD
+41 90 University of Central Florida, UCF
+42 70 University of Minnesota Duluth, UMD
+43 31.5 University of California Davis, UCD
 44 25 University of Massachusetts, Umass
 45 26.667 Texas A&M University, TAMU
 46 48.667 University of Florida, UFL
@@ -50,11 +50,11 @@
 48 46.5 Stony Brook University, SBU
 49 15.25 Purdue University, Purdue
 50 8.5 The University of Texas at Austin, UT-Austin
-51 -1 University of California-Riverside, UCR
+51 180 University of California-Riverside, UCR
 52 -1 Michigan State University, MSU
 53 27.667 The Ohio State University, OSU
 54 1.25 Massachusettes Institute of Technology, MIT
 55 2.5 University of California, Berkeley, UC Berkeley
 56 24.5 The Johns Hopkins University, JHU
 57 12.667 University of Wisconsin-Milwaukee, UWM
-58 -1 University of Waterloo, Waterloo
+58 95 University of Waterloo, Waterloo
