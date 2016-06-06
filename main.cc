@@ -50,8 +50,8 @@ StudentInfo *GetInputForOneStudent() {
 
 void GetInputForKStudentsToSchools(const int& student_num,
                                    vector<SchoolScore>* school_score) {
-    FILE *uni = fopen("A_University", "w+");
-		FILE *map = fopen("A_mapping", "w+");
+    FILE *uni = fopen("A_University", "r");
+		FILE *map = fopen("A_mapping", "r");
     int num_school;
     fscanf(uni, "%d", &num_school);
     for (int school = 0; school < num_school; ++school) {
@@ -124,7 +124,6 @@ void OutputSchoolsForStudents(StudentCluster studentCluster) {
 		for (vector<SchoolScore>::iterator iter = school_score.begin();
 				iter != school_score.end(); ++iter) {
 			if (school_ids.find(iter->_id) != school_ids.end()) {
-				cout << iter->_name << endl;
 				if (iter->_alias != -1) {
 					cout << iter->_alias << endl;
 				} else {

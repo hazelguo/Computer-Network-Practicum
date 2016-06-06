@@ -134,7 +134,6 @@ StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
 				paper += 1;
 			}	
 		}	
-		cerr << paper << endl;
  
 		final_decision = _final_decision;
     offers.clear();
