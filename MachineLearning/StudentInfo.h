@@ -20,8 +20,12 @@ public:
     School(double _rank, string _name);
     static void ReadIn(vector<School*> &schools, const char *filepath);
     static void ReadIn(const char *filepath_A, const char *filepath_C);
+    static void ReadInMap(vector<int> &maps, const char *filepath);
+    static void ReadInMap(const char *filepath_A, const char *filepath_C);
     static vector<School*> A_school;
     static vector<School*> C_school;
+    static vector<int> C_mapping;
+    static vector<int> A_mapping;
 };
 
 class Offer {
@@ -58,7 +62,7 @@ class StudentInfo {
         StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
                     double _GRE_overall, double _GRE_verbal, double _GRE_writing,
                     int _research_intern, int _company_intern,
-                    int _paper, int _final_decision);
+                    double _paper, int _final_decision, int flag = 0);
         //void CalculateAverage();
         //void Normalize();
         static void Standardize(vector<StudentInfo*> &students_info);

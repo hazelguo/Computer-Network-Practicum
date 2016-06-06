@@ -13,17 +13,40 @@
 using namespace std;
 #define max_rec 7
 
-StudentInfo *GetInputForOneStudent() {
-    int _school;
-    double _GPA;
-    double _IELTS;
-    int _TOEFL;
-    double _GRE_overall;
-    double _GRE_verbal;
-    double _GRE_writing;
-    int _research_intern;
-    int _company_intern;
-    int _paper;
+StudentInfo *GetInputForOneStudent(int argc, char* argv[]) {
+    int _school = -1;
+    double _GPA = -1;
+    double _IELTS = -1;
+    int _TOEFL = -1;
+    double _GRE_overall = -1;
+    double _GRE_verbal = -1;
+    double _GRE_writing = -1;
+    int _research_intern = -1;
+    int _company_intern = -1;
+    double _paper = 0;
+    for (int i = 1; i < argc; i += 2){
+        if (strcmp(argv[i], "-school") == 0)
+            _school = School::C_mapping[atoi(argv[i + 1])];
+        else if (strcmp(argv[i], "-GPA") == 0)
+            _GPA = atof(argv[i + 1]);
+        else if (strcmp(argv[i], "-IELTS") == 0)
+            _IELTS = atof(argv[i + 1]);
+        else if (strcmp(argv[i], "-TOEFL") == 0)
+            _TOEFL = atoi(argv[i + 1]);
+        else if (strcmp(argv[i], "-GRE_overall") == 0)
+            _GRE_overall = atof(argv[i + 1]);
+        else if (strcmp(argv[i], "-GRE_verbal") == 0)
+            _GRE_verbal = atof(argv[i + 1]);
+        else if (strcmp(argv[i], "-GRE_writing") == 0)
+            _GRE_writing = atof(argv[i + 1]);
+        else if (strcmp(argv[i], "-research_intern") == 0)
+            _research_intern = atoi(argv[i + 1]);
+        else if (strcmp(argv[i], "-company_intern") == 0)
+            _company_intern = atoi(argv[i + 1]);
+        else if (strcmp(argv[i], "-paper") == 0)
+            _paper = atof(argv[i + 1]);
+    }
+    /*
     printf("Please enter the id of your current university: ");
     scanf("%d", &_school);
     printf("Please enter your GPA: ");
@@ -44,8 +67,9 @@ StudentInfo *GetInputForOneStudent() {
     scanf("%d", &_company_intern);
     printf("Please enter the number of papers you have participated: ");
     scanf("%d", &_paper);
+    */
     return new StudentInfo(_school, _GPA, _IELTS, _TOEFL, _GRE_overall,
-                           _GRE_verbal, _GRE_writing, _research_intern, _company_intern, _paper, -1);
+                           _GRE_verbal, _GRE_writing, _research_intern, _company_intern, _paper, -1, 1);
 }
 
 void GetInputForKStudentsToSchools(const int& student_num,
@@ -135,18 +159,21 @@ void OutputSchoolsForStudents(StudentCluster studentCluster) {
 		}	
 }
 
-int main(){
+int main(int argc, char* argv[]){
 		vector<StudentInfo*> students_info;
     //School::ReadIn("MachineLearning/IOFiles/USASchool.in", "MachineLearning/IOFiles/ChinaSchool.in");
     School::ReadIn("A_University", "C_University");
+    School::ReadInMap("A_mapping", "C_mapping");
+    
 		StudentInfo::ReadIn(students_info, "MachineLearning/IOFiles/StudentsInfo.in");
     StudentInfo::Standardize(students_info);
-    StudentInfo *student_info = GetInputForOneStudent();
+
+    StudentInfo *student_info = GetInputForOneStudent(argc, argv);
     StudentInfo::Standardize(student_info);
     students_info.push_back(student_info);
 	
 		StudentCluster studentCluster = ConstructStudentClusterFromInput(students_info);
 		OutputSchoolsForStudents(studentCluster);
-
+        
     return 0;
 }

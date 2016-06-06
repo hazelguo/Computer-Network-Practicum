@@ -10,6 +10,8 @@ double sqr(double a) {
 
 vector<School*> School::C_school;
 vector<School*> School::A_school;
+vector<int> School::C_mapping;
+vector<int> School::A_mapping;
 
 /*
 vector<double> School::china_school;
@@ -68,6 +70,22 @@ void School::ReadIn(const char *filepath_A,
     ReadIn(C_school, filepath_C);
 }
 
+void School::ReadInMap(vector<int> &mapping,
+                    const char *filepath) {
+    FILE *fp;
+    int id1, id2;
+    fp = fopen(filepath, "r");
+    while (fscanf(fp, "%d%d", &id1, &id2) > 0){
+        mapping.push_back(id2);
+    }
+}
+
+void School::ReadInMap(const char *filepath_A,
+                       const char *filepath_C) {
+    ReadInMap(A_mapping, filepath_A);
+    ReadInMap(C_mapping, filepath_C);
+}
+
 Offer::Offer(int _school, int _degree) {
     school = _school;
     degree = _degree;
@@ -95,7 +113,7 @@ vector<double> StudentInfo::std(StudentInfo::attributes_num, 0);
 StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
                          double _GRE_overall, double _GRE_verbal, double _GRE_writing,
                          int _research_intern, int _company_intern,
-                         int _paper, int _final_decision) {
+                         double _paper, int _final_decision, int flag) {
     srand(time(0));
 
 		school = _school;
@@ -107,7 +125,8 @@ StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
     GRE_writing = _GRE_writing;
     research_intern = _research_intern;
     company_intern = _company_intern;
-    //paper = _paper;
+    paper = _paper;
+    if (flag == 0){
 		paper = 0;
 		int paper_num = (int)((double)_paper*ceil(sqrt((double)(rand()%100+1)))*0.1); // 1-1, 234-2, 56789-3		
 		for (int i = 0; i < paper_num; ++i) {
@@ -133,9 +152,10 @@ StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
 			} else if (paper_level == 10) {
 				paper += 1;
 			}	
-		}	
+		}
+    }
  
-		final_decision = _final_decision;
+	final_decision = _final_decision;
     offers.clear();
     attributes.clear();
     attributes.push_back(School::C_school[school]->rank);
