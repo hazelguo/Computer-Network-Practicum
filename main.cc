@@ -5,6 +5,7 @@
 //#include <unordered_set>
 #include <set>
 #include <vector>
+#include <algorithm>
 
 #include "MachineLearning/StudentInfo.h"
 #include "Cluster/StudentCluster.h"

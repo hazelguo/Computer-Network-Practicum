@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <ctime>
 
 #define cube(p) ((p)*(p)*(p))
 double sqr(double a) {
