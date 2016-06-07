@@ -1,5 +1,8 @@
 #include "StudentInfo.h"
 
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
 #include <iostream>
 #include <cmath>
 #include <ctime>
