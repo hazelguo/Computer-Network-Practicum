@@ -4,7 +4,7 @@
 
 #include <queue>
 #include <vector>
-#include <unordered_set>
+//#include <unordered_set>
 #include <set>
 
 const int k = 3;
@@ -32,11 +32,11 @@ double calculate_similarity(StudentInfo* a, StudentInfo* b){
 }
 
 void GetInputForKStudentsToSchools(const int& student_num,
-		vector<unordered_set<int> >* school_ids_for_student, 
+		vector<set<int> >* school_ids_for_student, 
 		vector<SchoolScore>* school_score) {
 	//freopen("../Cluster/school_ids_for_student", "r", stdin);
 	freopen("IOFiles/school_ids_for_student", "r", stdin);
-	unordered_set<int> school_ids;
+	set<int> school_ids;
 	for (int student = 0; student < student_num; ++student) {
 		int num_school;
 		scanf("%d", &num_school);
@@ -212,7 +212,7 @@ int main(){
 	}*/
 //	return 0;
 
-	vector<unordered_set<int> > school_ids_for_student;
+	vector<set<int> > school_ids_for_student;
 	vector<SchoolScore> school_score;
 	GetInputForKStudentsToSchools(student_num, &school_ids_for_student, 
 			&school_score);

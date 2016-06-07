@@ -3,7 +3,8 @@
 
 #include <vector>
 #include <string>
-#include <unordered_set>
+//#include <unordered_set>
+#include <set>
 
 using namespace std;
 
@@ -26,7 +27,7 @@ struct SchoolScore {
 
 class KStudentsToSchools {
 public:
-	KStudentsToSchools(const vector<unordered_set<int> >& school_ids_for_student,
+	KStudentsToSchools(const vector<set<int> >& school_ids_for_student,
 			const vector<SchoolScore>& school_score);
 	~KStudentsToSchools();
 
@@ -35,7 +36,7 @@ public:
 
 private:
 	// For each student, choice stores all schools that might accept him.
-	vector<unordered_set<int> > _school_ids_for_student;
+	vector<set<int> > _school_ids_for_student;
 	// School ranking. Better school has smaller score.
 	vector<SchoolScore> _school_score;
 };

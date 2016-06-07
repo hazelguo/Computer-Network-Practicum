@@ -1,8 +1,9 @@
-
+#include <cmath>
 #include <cstdlib>
 #include <iostream>
 #include <limits.h>
-#include <unordered_set>
+//#include <unordered_set>
+#include <set>
 #include <vector>
 
 #include "MachineLearning/StudentInfo.h"
@@ -139,7 +140,9 @@ StudentCluster ConstructStudentClusterFromInput(vector<StudentInfo *> students_i
 
 void OutputSchoolsForStudents(StudentCluster studentCluster) {
     int num_students = studentCluster.GetNumStudents();
-    unordered_set<int> school_ids = 
+    //unordered_set<int> school_ids = 
+		//		studentCluster.GetSchoolIdsForStudent(num_students - 1);
+    set<int> school_ids = 
 				studentCluster.GetSchoolIdsForStudent(num_students - 1);
 		
 		int count = 0;

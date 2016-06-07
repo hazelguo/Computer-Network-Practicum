@@ -1,8 +1,10 @@
 #ifndef STUDENT_CLUSTER_H
 #define STUDENT_CLUSTER_H
 
-#include <unordered_map>
-#include <unordered_set>
+//#include <unordered_map>
+//#include <unordered_set>
+#include <map>
+#include <set>
 #include <vector>
 
 using namespace std;
@@ -26,7 +28,7 @@ public:
      * @param student_id student id of the given student.
      * @return a set of school ids for the given student.
      */
-    unordered_set<int> GetSchoolIdsForStudent(int student_id);
+    set<int> GetSchoolIdsForStudent(int student_id);
 
 private:
 		double GetMaxCluster(int *cluster_ids);
@@ -51,7 +53,7 @@ private:
      * @param school_id school id of the given school.
      * @return a map of count for each cluster id.
      */
-    unordered_map<int, int> GetClusterCountForSchool(int school_id);
+    map<int, int> GetClusterCountForSchool(int school_id);
 
     /**
      * Finds the maximum of accepted students in one cluster.
@@ -59,7 +61,7 @@ private:
      * @param count_cluster the map of count for each cluster id.
      * @return maximum of accepted students in one cluster.
      */
-    int GetMaxClusterCount(const unordered_map<int, int>& count_cluster);
+    int GetMaxClusterCount(const map<int, int>& count_cluster);
 
     /**
      * Calculates the cluster ids which are acceptible for school 'school_id'.
@@ -69,9 +71,9 @@ private:
      * @param count_cluster the map of count for each cluster id.
      * @return a set of cluster ids which are acceptible for the given school.
      */
-    unordered_set<int> GetAcceptedClusterIdsForSchool(int school_id,
+    set<int> GetAcceptedClusterIdsForSchool(int school_id,
                                                       int max_cluster_count,
-                                                      const unordered_map<int, int>& count_cluster);
+                                                      const map<int, int>& count_cluster);
 
     /**
      * Updates choice of the given school for students based on 'accepted_cluster_ids'.
@@ -79,7 +81,7 @@ private:
      * @param school_id school id of the given school.
      * @param accepted_cluster_ids a set of cluster ids which are acceptible for the given school.
      */
-    void UpdateSchoolForStudents(int school_id, const unordered_set<int>& accepted_cluster_ids);
+    void UpdateSchoolForStudents(int school_id, const set<int>& accepted_cluster_ids);
 
     /**
      * Calculates all students that school 'school_id' might accept, store the result in _school_ids_for_student.
@@ -102,7 +104,7 @@ private:
     // Optimal K value in K-medoids algorithm for each school.
     vector<int> _k_value_for_school;
     // For each student, Choice stores all schools that might accept him.
-    vector<unordered_set<int> > _school_ids_for_student;
+    vector<set<int> > _school_ids_for_student;
 };
 
 #endif /* STUDENT_CLUSTER_H */

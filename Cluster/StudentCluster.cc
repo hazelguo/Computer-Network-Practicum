@@ -2,7 +2,9 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <unordered_map>
+//#include <unordered_map>
+#include <map>
+#include <cmath>
 
 #include "cluster.h"
 
@@ -42,7 +44,8 @@ int StudentCluster::GetNumStudents() {
     return _num_students;
 }
 
-unordered_set<int> StudentCluster::GetSchoolIdsForStudent(int student_id) {
+//unordered_set<int> StudentCluster::GetSchoolIdsForStudent(int student_id) {
+set<int> StudentCluster::GetSchoolIdsForStudent(int student_id) {
     if (_school_ids_for_student.empty()) {
         CalcClusterResult();
         for (int school_id = 0; school_id < _num_schools; ++school_id) {
@@ -90,12 +93,13 @@ double StudentCluster::GetMaxCluster(int *cluster_ids) {
 	return re;*/
 
 	double re = 0;
-	unordered_map<int, int> count;
+	//unordered_map<int, int> count;
+	map<int, int> count;
 	count.clear();
 	for (int i = 0; i < _num_students; ++i) {
 		count[cluster_ids[i]]++;
 	}
-	for (unordered_map<int, int>::iterator iter = count.begin(); iter != count.end(); ++iter) {
+	for (map<int, int>::iterator iter = count.begin(); iter != count.end(); ++iter) {
 		re = max(re, iter->second);
 	}
 	if (re < 1) {
@@ -105,7 +109,8 @@ double StudentCluster::GetMaxCluster(int *cluster_ids) {
 }
 
 void StudentCluster::CalcClusterResult() {
-    unordered_set<int> empty_set;
+    //unordered_set<int> empty_set;
+    set<int> empty_set;
     empty_set.clear();
     for (int i = 0; i < _num_students; ++i) {
         _school_ids_for_student.push_back(empty_set);
@@ -138,8 +143,8 @@ void StudentCluster::CalcClusterResult() {
     }
 }
 
-unordered_map<int, int> StudentCluster::GetClusterCountForSchool(int school_id) {
-    unordered_map<int, int> count_cluster;
+map<int, int> StudentCluster::GetClusterCountForSchool(int school_id) {
+    map<int, int> count_cluster;
     vector<int> student_ids = _student_ids_accepted_by_school[school_id];
     for (int i = 0; i < student_ids.size(); ++i) {
         int student_id = student_ids[i];
@@ -151,21 +156,21 @@ unordered_map<int, int> StudentCluster::GetClusterCountForSchool(int school_id) 
     return count_cluster;
 }
 
-int StudentCluster::GetMaxClusterCount(const unordered_map<int, int>& count_cluster) {
+int StudentCluster::GetMaxClusterCount(const map<int, int>& count_cluster) {
     int max_cluster_count = 0;
-    for (unordered_map<int, int>::const_iterator iter = count_cluster.begin();
+    for (map<int, int>::const_iterator iter = count_cluster.begin();
          iter != count_cluster.end(); ++iter) {
         max_cluster_count = max(max_cluster_count, iter->second);
     }
     return max_cluster_count;
 }
 
-unordered_set<int> StudentCluster::GetAcceptedClusterIdsForSchool(int school_id,
+set<int> StudentCluster::GetAcceptedClusterIdsForSchool(int school_id,
                                                            int max_cluster_count,
-                                                           const unordered_map<int, int>& count_cluster) {
+                                                           const map<int, int>& count_cluster) {
     int cluster_count_threshold = (int) (max_cluster_count * 0.5 + 0.5);
-    unordered_set<int> accepted_cluster_ids;
-    for (unordered_map<int, int>::const_iterator iter = count_cluster.begin();
+    set<int> accepted_cluster_ids;
+    for (map<int, int>::const_iterator iter = count_cluster.begin();
          iter != count_cluster.end(); ++iter) {
         if (iter->second >= cluster_count_threshold) {
             accepted_cluster_ids.insert(iter->first);
@@ -174,7 +179,7 @@ unordered_set<int> StudentCluster::GetAcceptedClusterIdsForSchool(int school_id,
     return accepted_cluster_ids;
 }
 
-void StudentCluster::UpdateSchoolForStudents(int school_id, const unordered_set<int>& accepted_cluster_ids) {
+void StudentCluster::UpdateSchoolForStudents(int school_id, const set<int>& accepted_cluster_ids) {
     for (int student_id = 0; student_id < _num_students; ++student_id) {
         int k_value = _k_value_for_school[school_id];
         int *cluster_id_for_student = _cluster_ids_for_k_value[k_value];
@@ -186,8 +191,8 @@ void StudentCluster::UpdateSchoolForStudents(int school_id, const unordered_set<
 }
 
 void StudentCluster::CalcSelectedStudentsForSchool(int school_id) {
-    unordered_map<int, int> count_cluster = GetClusterCountForSchool(school_id);
+    map<int, int> count_cluster = GetClusterCountForSchool(school_id);
     int max_cluster_count = GetMaxClusterCount(count_cluster);
-    unordered_set<int> accepted_cluster_ids = GetAcceptedClusterIdsForSchool(school_id, max_cluster_count, count_cluster);
+    set<int> accepted_cluster_ids = GetAcceptedClusterIdsForSchool(school_id, max_cluster_count, count_cluster);
     UpdateSchoolForStudents(school_id, accepted_cluster_ids);
 }
