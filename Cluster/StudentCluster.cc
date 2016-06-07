@@ -120,7 +120,7 @@ void StudentCluster::CalcClusterResult() {
 		double error;
     int ifound;
     int *cluster_ids;
-    vector<double> min_cost_for_school(_num_schools, (double)INT_MAX);
+    vector<double> min_cost_for_school(_num_schools, 1.7976931348623158e+308);
 
 		for (int i = 1; i <= _num_students; ++i) {
         cluster_ids = (int*)calloc(_num_students, sizeof(int));
