@@ -131,32 +131,35 @@ StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
     company_intern = _company_intern;
     paper = _paper;
     if (flag == 0){
-		paper = 0;
-		int paper_num = (int)((double)_paper*ceil(sqrt((double)(rand()%100+1)))*0.1); // 1-1, 234-2, 56789-3		
-		for (int i = 0; i < paper_num; ++i) {
-			int paper_level = (int)ceil(sqrt((double)(rand()%196+1)));
-			if (paper_level == 1) {
-				paper += 10;
-			} else if (paper_level == 2) {
-				paper += 8;
-			} else if (paper_level == 3) {
-				paper += 6;
-			} else if (paper_level == 4) {
-				paper += 6;
-			} else if (paper_level == 5) {
-				paper += 4;
-			} else if (paper_level == 6) {
-				paper += 4;
-			} else if (paper_level == 7) {
-				paper += 2;
-			} else if (paper_level == 8) {
-				paper += 2;
-			} else if (paper_level == 9) {
-				paper += 1;
-			} else if (paper_level == 10) {
-				paper += 1;
-			}	
-		}
+			paper = 0;
+			double tmp = 0;
+			for (int j = 0; j < 100; ++j) {
+				for (int i = 0; i < _paper; ++i) {
+					int paper_level = (int)ceil(sqrt((double)(rand()%196+1)));
+					if (paper_level == 1) {
+						tmp += 10;
+					} else if (paper_level == 2) {
+						tmp += 8;
+					} else if (paper_level == 3) {
+						tmp += 6;
+					} else if (paper_level == 4) {
+						tmp += 6;
+					} else if (paper_level == 5) {
+						tmp += 4;
+					} else if (paper_level == 6) {
+						tmp += 4;
+					} else if (paper_level == 7) {
+						tmp += 2;
+					} else if (paper_level == 8) {
+						tmp += 2;
+					} else if (paper_level == 9) {
+						tmp += 1;
+					} else if (paper_level == 10) {
+						tmp += 1;
+					}	
+				}
+			}
+			paper = tmp / 100.0;
     }
  
 	final_decision = _final_decision;
