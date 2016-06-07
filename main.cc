@@ -147,6 +147,7 @@ void OutputSchoolsForStudents(StudentCluster studentCluster) {
 				studentCluster.GetSchoolIdsForStudent(num_students - 1);
 		
 		int count = 0;
+		freopen("output.txt","w",stdout);
 		vector<SchoolScore> school_score;
 		GetInputForKStudentsToSchools(num_students, &school_score);	
 		for (vector<SchoolScore>::iterator iter = school_score.begin();
@@ -161,6 +162,7 @@ void OutputSchoolsForStudents(StudentCluster studentCluster) {
 				if (count >= max_rec) break;
 			}
 		}	
+		fclose(stdout);
 }
 
 int main(int argc, char* argv[]){
