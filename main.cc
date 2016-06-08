@@ -115,7 +115,8 @@ StudentCluster ConstructStudentClusterFromInput(vector<StudentInfo *> students_i
     fclose(stdin);
     
     double **distance = (double**)calloc(num_students, sizeof(double*));
-    for(int i = 0; i < num_students; ++i) {
+    num_students = students_info.size();
+		for(int i = 0; i < num_students; ++i) {
 				if (i == 0) {
 					distance[i] = NULL;
 					continue;
