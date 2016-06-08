@@ -133,9 +133,9 @@ StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
     if (flag == 0){
 			paper = 0;
 			double tmp = 0;
-			for (int j = 0; j < 70; ++j) {
+			for (int j = 0; j < 100; ++j) {
 				for (int i = 0; i < _paper; ++i) {
-					int paper_level = (int)ceil(sqrt((double)(rand()%144+1)));
+					int paper_level = (int)ceil(sqrt((double)(rand()%196+1)));
 					if (paper_level == 1) {
 						tmp += 10;
 					} else if (paper_level == 2) {
@@ -159,9 +159,9 @@ StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
 					}	
 				}
 			}
-			paper = tmp / 70.0;
+			paper = tmp / 100.0;
     }
-
+ 
 	final_decision = _final_decision;
     offers.clear();
     attributes.clear();
@@ -263,7 +263,7 @@ void StudentInfo::ReadIn(vector<StudentInfo*> &students_info,
     int _paper;
     int _final_decision;
     fp = fopen(filepath, "r");
-		while (fscanf(fp, "%d%lf%lf%d%lf%lf%lf%d%d%d%d", &_school,
+    while (fscanf(fp, "%d%lf%lf%d%lf%lf%lf%d%d%d%d", &_school,
                   &_GPA, &_IELTS, &_TOEFL, &_GRE_overall, &_GRE_verbal,
                   &_GRE_writing, &_research_intern, &_company_intern, 
                   &_paper, &_final_decision) > 0) {
@@ -271,7 +271,7 @@ void StudentInfo::ReadIn(vector<StudentInfo*> &students_info,
                                        _GRE_overall, _GRE_verbal, _GRE_writing, 
                                        _research_intern, _company_intern,
                                        _paper, _final_decision);
-				int _offer_num, _school, _degree;
+        int _offer_num, _school, _degree;
         fscanf(fp, "%d", &_offer_num);
         while (_offer_num --) {
             fscanf(fp, "%d%d", &_school, &_degree);

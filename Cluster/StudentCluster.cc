@@ -8,7 +8,7 @@
 
 #include "cluster.h"
 
-const int knpass = 9;
+const int knpass = 50;
 
 StudentCluster::StudentCluster(int num_students,
                  int num_schools,
@@ -122,7 +122,7 @@ void StudentCluster::CalcClusterResult() {
     int *cluster_ids;
     vector<double> min_cost_for_school(_num_schools, 1.7976931348623158e+308);
 
-		for (int i = 1; i < _num_students; ++i) {
+		for (int i = 1; i <= _num_students; ++i) {
         cluster_ids = (int*)calloc(_num_students, sizeof(int));
         kmedoids(i, _num_students, _distance, knpass, cluster_ids, &error, &ifound);
         _cluster_ids_for_k_value.push_back(cluster_ids);

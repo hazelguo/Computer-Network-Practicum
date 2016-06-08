@@ -60,7 +60,7 @@ void GetInputForKStudentsToSchools(const int& student_num,
 		scanf("%d %lf", &id, &score);
 		gets(name);
 		if (score == -1) continue;
-		school_score->push_back(SchoolScore(score, -1, name, id));
+		school_score->push_back(SchoolScore(score, name, id));
 	} 
 	fclose(stdin);
 	sort(school_score->begin(), school_score->end());
@@ -116,11 +116,11 @@ int main(){
     StudentInfo::ReadIn(students_info, "IOFiles/StudentsInfo.in");
 	StudentInfo::Standardize(students_info);
     
- // StudentInfo *student_info = GetInputForOneStudent();
-//	StudentInfo::Standardize(student_info);    
+  StudentInfo *student_info = GetInputForOneStudent();
+	StudentInfo::Standardize(student_info);    
     
 	//By gzh: generate accepted student ids for each school.
-	freopen("IOFiles/RejectInfo", "r", stdin);
+	/*freopen("IOFiles/RejectInfo", "r", stdin);
 	int num_rej;
 	set<int> rej;
 	scanf("%d", &num_rej);
@@ -130,7 +130,7 @@ int main(){
 		rej.insert(a);
 	}
 	fclose(stdin);
-	
+
 	freopen("IOFiles/student_ids_for_school_tmp", "w", stdout);
 	vector<vector<int> > student_ids;
 	vector<int> ttmp;
@@ -142,13 +142,13 @@ int main(){
 		for (vector<Offer>::iterator one_offer = students_info[i]->offers.begin();
 				one_offer != students_info[i]->offers.end(); ++one_offer) {
 			student_ids[one_offer->school].push_back(i);
-		//	printf("%d %d\n", i, one_offer->school);
+			printf("%d %d\n", i, one_offer->school);
 		}
 	}	
 	while (student_ids.back().size() == 0) {
 		student_ids.pop_back();
-	}
-	printf("%ld %ld\n", students_info.size(), student_ids.size());
+	}*/
+/*	printf("%ld %ld\n", students_info.size(), student_ids.size());
 	for (vector<vector<int> >::iterator iter = student_ids.begin();
 			iter != student_ids.end(); ++iter) {
 		printf("%ld ", iter->size());
@@ -158,8 +158,7 @@ int main(){
 		}
 		printf("\n");
 	}
-	fclose(stdout);
-	return 0;
+	fclose(stdout);*/
 /*	freopen("IOFiles/school_ids_for_student", "w", stdout);
 	vector<vector<int> > student_ids;
 	vector<int> ttmp;
@@ -181,7 +180,7 @@ int main(){
 	fclose(stdout);
 	return 0;*/
 
-/*	int student_num = students_info.size();
+	int student_num = students_info.size();
 	for(int i = 0; i < student_num; ++i){
 		//tmp.similarity = calculate_similarity(students_info[i], student_info);
 		//tmp.similarity = cube(tmp.similarity*100);
@@ -197,7 +196,7 @@ int main(){
 				pq.push(tmp);
 			}
 		}
-	}*/
+	}
 /*
 	FILE *fp;
     fp = fopen("IOFiles/k-nearest.out", "w");
@@ -213,7 +212,7 @@ int main(){
 	}*/
 //	return 0;
 
-	/*vector<set<int> > school_ids_for_student;
+	vector<set<int> > school_ids_for_student;
 	vector<SchoolScore> school_score;
 	GetInputForKStudentsToSchools(student_num, &school_ids_for_student, 
 			&school_score);
@@ -237,5 +236,5 @@ int main(){
 		pq.pop();	
 	}
 	return 0;
-*/	
+	
 }
