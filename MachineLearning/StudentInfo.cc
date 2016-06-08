@@ -132,9 +132,9 @@ StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
     paper = _paper;
     if (flag == 0){
 		paper = 0;
-		int paper_num = (int)((double)_paper*ceil(sqrt((double)(rand()%100+1)))*0.1); // 1-1, 234-2, 56789-3		
-		for (int i = 0; i < paper_num; ++i) {
-			int paper_level = (int)ceil(sqrt((double)(rand()%196+1)));
+//		int paper_num = (int)((double)_paper*ceil(sqrt((double)(rand()%100+1)))*0.1); // 1-1, 234-2, 56789-3		
+		for (int i = 0; i < _paper; ++i) {
+			int paper_level = (int)ceil(sqrt((double)(rand()%144+1)));
 			if (paper_level == 1) {
 				paper += 10;
 			} else if (paper_level == 2) {
