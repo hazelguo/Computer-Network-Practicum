@@ -31,7 +31,7 @@ public:
     set<int> GetSchoolIdsForStudent(int student_id);
 
 private:
-		double GetMaxCluster(int *cluster_ids);
+		double GetMaxCluster(int *cluster_id);
 
     /**
      * Calculates cost function for school 'school_id' within cluster result 'cluster_ids'.
@@ -102,7 +102,7 @@ private:
     // Cluster result (id array) for each K value.
     vector<int *> _cluster_ids_for_k_value;
     // Optimal K value in K-medoids algorithm for each school.
-    vector<int> _k_value_for_school;
+//    vector<int> _k_value_for_school;
     // For each student, Choice stores all schools that might accept him.
     vector<set<int> > _school_ids_for_student;
 };

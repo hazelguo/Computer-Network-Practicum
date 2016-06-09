@@ -131,32 +131,35 @@ StudentInfo::StudentInfo(int _school, double _GPA, double _IELTS, int _TOEFL,
     company_intern = _company_intern;
     paper = _paper;
     if (flag == 0){
-		paper = 0;
-//		int paper_num = (int)((double)_paper*ceil(sqrt((double)(rand()%100+1)))*0.1); // 1-1, 234-2, 56789-3		
-		for (int i = 0; i < _paper; ++i) {
-			int paper_level = (int)ceil(sqrt((double)(rand()%144+1)));
-			if (paper_level == 1) {
-				paper += 10;
-			} else if (paper_level == 2) {
-				paper += 8;
-			} else if (paper_level == 3) {
-				paper += 6;
-			} else if (paper_level == 4) {
-				paper += 6;
-			} else if (paper_level == 5) {
-				paper += 4;
-			} else if (paper_level == 6) {
-				paper += 4;
-			} else if (paper_level == 7) {
-				paper += 2;
-			} else if (paper_level == 8) {
-				paper += 2;
-			} else if (paper_level == 9) {
-				paper += 1;
-			} else if (paper_level == 10) {
-				paper += 1;
-			}	
-		}
+			paper = 0;
+			double tmp = 0;
+			for (int j = 0; j < 70; ++j) {
+				for (int i = 0; i < _paper; ++i) {
+					int paper_level = (int)ceil(sqrt((double)(rand()%144+1)));
+					if (paper_level == 1) {
+						tmp += 10;
+					} else if (paper_level == 2) {
+						tmp += 8;
+					} else if (paper_level == 3) {
+						tmp += 6;
+					} else if (paper_level == 4) {
+						tmp += 6;
+					} else if (paper_level == 5) {
+						tmp += 4;
+					} else if (paper_level == 6) {
+						tmp += 4;
+					} else if (paper_level == 7) {
+						tmp += 2;
+					} else if (paper_level == 8) {
+						tmp += 2;
+					} else if (paper_level == 9) {
+						tmp += 1;
+					} else if (paper_level == 10) {
+						tmp += 1;
+					}	
+				}
+			}
+			paper = tmp / 70.0;
     }
  
 	final_decision = _final_decision;
@@ -322,15 +325,16 @@ void StudentInfo::GetSimilarity(StudentInfo *a,
                                 StudentInfo *b,
                                 double &similarity,
                                 bool &valuable) {
-		similarity = 700*cube(b->attributes[0]-a->attributes[0]) 
-							+ 1000.0*cube(a->attributes[1]-b->attributes[1]) 
-							+ 100.0*(a->attributes[3]-b->attributes[3])
-							+ 50*(a->attributes[4]-b->attributes[4]) 
+		
+		similarity = 1000.0*cube(b->attributes[0]-a->attributes[0]) 
+							+ 800.0*cube(a->attributes[1]-b->attributes[1]) 
+							+ 50.0*(a->attributes[3]-b->attributes[3])
+							+ 50.0*(a->attributes[4]-b->attributes[4]) 
 							+ 50*(a->attributes[5]-b->attributes[5])
-							+ 10*(a->attributes[6]-b->attributes[6]) 
-							+ 300*cube(a->attributes[7]-b->attributes[7])
-							+ 300*cube(a->attributes[8]-b->attributes[8])
-							+ 500*cube(a->attributes[9]-b->attributes[9]);
+							+ 50*(a->attributes[6]-b->attributes[6]) 
+							+ 400.0*cube(a->attributes[7]-b->attributes[7])
+							+ 200*cube(a->attributes[8]-b->attributes[8])
+							+ 50.0*cube(a->attributes[9]-b->attributes[9]);
 
 		valuable = 1;
 		return;

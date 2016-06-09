@@ -113,7 +113,7 @@ StudentCluster ConstructStudentClusterFromInput(vector<StudentInfo *> students_i
         student_ids_accepted_by_school.push_back(students);
     }
     fclose(stdin);
-    
+
     double **distance = (double**)calloc(num_students, sizeof(double*));
     num_students = students_info.size();
 		for(int i = 0; i < num_students; ++i) {
@@ -131,9 +131,9 @@ StudentCluster ConstructStudentClusterFromInput(vector<StudentInfo *> students_i
             } else {
 							distance[i][j] = -1;
 						}
-        }
-    }
-    
+				}
+		}
+
     StudentCluster studentCluster(num_students, num_schools, distance, 
                                   student_ids_accepted_by_school);
     
